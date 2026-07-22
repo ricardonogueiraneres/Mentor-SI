@@ -2,8 +2,6 @@
 
 > Plataforma gamificada de estudos desenvolvida em Python com IA e SQLite.
 
-> Plataforma gamificada de estudos desenvolvida em Python com IA e SQLite.
-
 ![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python)
 ![SQLite](https://img.shields.io/badge/SQLite-Database-blue?logo=sqlite)
 ![Git](https://img.shields.io/badge/Git-Version%20Control-red?logo=git)
@@ -15,17 +13,19 @@
 
 O Mentor SI é uma plataforma gamificada desenvolvida em Python para auxiliar estudantes de Sistemas de Informação no aprendizado de programação.
 
-O sistema utiliza conceitos de gamificação para incentivar o estudo contínuo através de:
+O projeto combina conceitos de gamificação, persistência de dados com SQLite e Inteligência Artificial para incentivar o estudo contínuo e acompanhar a evolução do aluno.
 
-- XP
-- Conquistas
-- Sistema de Streak
-- Quiz
-- Dashboard
-- Histórico
-- Estatísticas
-- SQLite
-- Recomendações de estudo contínuo.
+Entre os principais recursos da plataforma estão:
+
+- ⭐ Sistema de XP
+- 🏆 Sistema de Conquistas
+- 🔥 Sistema de Streak
+- 📝 Quiz de Python
+- 📊 Dashboard
+- 📈 Estatísticas
+- 📜 Histórico
+- 🤖 Recomendações de estudo
+- 💾 Persistência em SQLite
 
 ## ✨ Funcionalidades
 
@@ -44,17 +44,20 @@ O sistema utiliza conceitos de gamificação para incentivar o estudo contínuo 
 
 ## 🛠 Tecnologias
 
-- Python 3
+- Python 3.13
 - SQLite
-- VS Code
 - Git
 - GitHub
+- Visual Studio Code
 
 ## 📂 Estrutura do Projeto
 
 ```text
 Mentor-SI/
-
+│
+├── notebooks/
+├── tests/
+│
 ├── chatbot.py
 ├── banco.py
 ├── repositorio.py
@@ -71,11 +74,11 @@ Mentor-SI/
 ├── missoes.py
 ├── recomendacoes.py
 ├── relatorio.py
-├── notebooks/
-├── tests/
+│
 ├── README.md
 ├── CHANGELOG.md
-└── .gitignore
+├── .gitignore
+└── LICENSE
 ```
 
 ## 📋 Requisitos
@@ -86,19 +89,19 @@ Mentor-SI/
 
 ## 🚀 Instalação
 
-Clone o repositório:
+1. Clone o repositório:
 
 ```bash
 git clone https://github.com/ricardonogueiraneres/Mentor-SI.git
 ```
 
-2. Entre na pasta:
+2. Entre na pasta do projeto:
 
 ```bash
-cd mentor-si
+cd Mentor-SI
 ```
 
-3. Execute o projeto:
+3. Execute o programa:
 
 ```bash
 python chatbot.py
@@ -116,29 +119,41 @@ Ao iniciar o sistema você poderá:
 
 ## 🚀 Roadmap
 
-- [x] Sistema de XP
-- [x] Sistema de Streak
-- [x] Conquistas
-- [x] Dashboard
-- [x] Quiz
-- [x] Histórico
-- [x] SQLite
-- [ ] Interface gráfica (Tkinter ou PyQt)
-- [ ] Sistema de login com múltiplos usuários
-- [ ] Novos quizzes por disciplina
-- [ ] Integração com IA para recomendações de estudo
-- [ ] Versão Web com Flask ou Django
+### ✅ Versão 6.0
+
+- Sistema de XP
+- Sistema de Streak
+- Sistema de Conquistas
+- Dashboard
+- Quiz
+- Histórico
+- SQLite
+
+### 🔄 Próximas versões
+
+- Interface gráfica
+- Login de usuários
+- Dashboard com gráficos
+- Flashcards
+- IA integrada
+- Exportação em PDF
+- Ranking
+- Tema escuro
 
 ## 📄 Licença
 
-Este projeto foi desenvolvido para fins de estudo e portfólio.
+Este projeto está licenciado sob a licença MIT.
+
+Foi desenvolvido para fins de estudo, prática e construção de portfólio.
 
 ## 👨‍💻 Autor
 
 **Ricardo Adriano Nogueira Neres**
 
-Estudante de Sistemas de Informação, apaixonado por tecnologia, programação e Inteligência Artificial.
+🎓 Estudante de Sistemas de Informação
 
-Projeto desenvolvido para fins de estudo, prática e construção de portfólio.
+💻 Apaixonado por Python, Inteligência Artificial e desenvolvimento de software.
+
+🔗 **GitHub:** [ricardonogueiraneres](https://github.com/ricardonogueiraneres)
 
 ⭐ Se este projeto foi útil para você, considere deixar uma estrela no repositório.
