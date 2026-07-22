@@ -1,50 +1,60 @@
 # 🎓 Mentor SI 6.0
 
-> Plataforma de estudos em Python • Versão 6.0
+> Plataforma gamificada de estudos desenvolvida em Python com IA e SQLite.
 
-Mentor SI é uma plataforma de estudos desenvolvida em Python para auxiliar estudantes de Sistemas de Informação por meio de gamificação, quizzes, acompanhamento de desempenho e persistência de dados com SQLite.
+> Plataforma gamificada de estudos desenvolvida em Python com IA e SQLite.
 
-## 🎯 Objetivo
+![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python)
+![SQLite](https://img.shields.io/badge/SQLite-Database-blue?logo=sqlite)
+![Git](https://img.shields.io/badge/Git-Version%20Control-red?logo=git)
+![GitHub](https://img.shields.io/badge/GitHub-Repository-black?logo=github)
+![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-success)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-Desenvolver uma plataforma de estudos modular em Python para praticar programação, persistência de dados com SQLite e conceitos de gamificação, oferecendo uma ferramenta que incentive o aprendizado contínuo.
+## 📚 Sobre o projeto
 
-## 📑 Índice
+O Mentor SI é uma plataforma gamificada desenvolvida em Python para auxiliar estudantes de Sistemas de Informação no aprendizado de programação.
 
-- Objetivo
-- Funcionalidades
-- Tecnologias
-- Estrutura do Projeto
-- Requisitos
-- Como Executar
-- Roadmap
-- Licença
-- Autor
+O sistema utiliza conceitos de gamificação para incentivar o estudo contínuo através de:
+
+- XP
+- Conquistas
+- Sistema de Streak
+- Quiz
+- Dashboard
+- Histórico
+- Estatísticas
+- SQLite
+- Recomendações de estudo contínuo.
 
 ## ✨ Funcionalidades
 
 - 👤 Cadastro de usuário
 - ⭐ Sistema de XP
 - 🔥 Sistema de Streak
-- 🏆 Conquistas
+- 🏆 Sistema de Conquistas
 - 📝 Quiz de Python
 - 📚 Plano de Estudos
 - 📊 Dashboard
 - 📈 Estatísticas
 - 📜 Histórico
 - 📉 Desempenho
-- 💾 Banco de Dados SQLite
+- 🤖 Recomendações de estudo
+- 💾 Persistência em SQLite
 
 ## 🛠 Tecnologias
 
 - Python 3
 - SQLite
 - VS Code
+- Git
+- GitHub
 
 ## 📂 Estrutura do Projeto
 
 ```text
-Mentor SI/
-│
+Mentor-SI/
+
 ├── chatbot.py
 ├── banco.py
 ├── repositorio.py
@@ -61,9 +71,11 @@ Mentor SI/
 ├── missoes.py
 ├── recomendacoes.py
 ├── relatorio.py
-├── mentor.db
+├── notebooks/
+├── tests/
 ├── README.md
-└── CHANGELOG.md
+├── CHANGELOG.md
+└── .gitignore
 ```
 
 ## 📋 Requisitos
@@ -72,12 +84,12 @@ Mentor SI/
 - SQLite (já incluído no Python)
 - VS Code (opcional)
 
-## ▶️ Como executar
+## 🚀 Instalação
 
-1. Clone o repositório:
+Clone o repositório:
 
 ```bash
-git clone https://github.com/SEU-USUARIO/mentor-si.git
+git clone https://github.com/ricardonogueiraneres/Mentor-SI.git
 ```
 
 2. Entre na pasta:
