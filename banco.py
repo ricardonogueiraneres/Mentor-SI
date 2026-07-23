@@ -7,6 +7,7 @@ BANCO = "mentor.db"
 def conectar():
     conexao = sqlite3.connect(BANCO)
     conexao.execute("PRAGMA foreign_keys = ON")
+    conexao.row_factory = sqlite3.Row
     return conexao
 
 
@@ -24,6 +25,8 @@ def criar_banco():
         CREATE TABLE IF NOT EXISTS usuario (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nome TEXT NOT NULL,
+            usuario TEXT UNIQUE NOT NULL,
+            senha TEXT NOT NULL,
             xp INTEGER DEFAULT 0,
             streak INTEGER DEFAULT 0,
             ultima_data TEXT DEFAULT ''
