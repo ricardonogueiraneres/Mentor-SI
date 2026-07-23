@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-Plataforma gamificada de estudos desenvolvida em Python com IA e SQLite.
+Plataforma gamificada para o aprendizado de programação, desenvolvida em Python com IA e SQLite.
 </p>
 
 ![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python)
