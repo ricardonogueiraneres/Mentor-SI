@@ -1,6 +1,12 @@
 # 🎓 Mentor SI 6.0
 
-> Plataforma gamificada de estudos desenvolvida em Python com IA e SQLite.
+<p align="center">
+  <img src="assets/banner.png" alt="Mentor SI Banner" width="100%">
+</p>
+
+<p align="center">
+Plataforma gamificada de estudos desenvolvida em Python com IA e SQLite.
+</p>
 
 ![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python)
 ![SQLite](https://img.shields.io/badge/SQLite-Database-blue?logo=sqlite)
