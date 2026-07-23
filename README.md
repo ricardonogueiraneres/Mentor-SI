@@ -1,4 +1,4 @@
-# 🎓 Mentor SI 6.0
+# 🎓 Mentor SI 
 
 <p align="center">
   <img src="assets/banner.png" alt="Mentor SI Banner" width="100%">
