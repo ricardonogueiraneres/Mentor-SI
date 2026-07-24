@@ -14,27 +14,27 @@ from repositorio import (
 from xp import nivel_xp
 
     
-def mostrar_relatorio():
+def mostrar_relatorio(usuario_id: int):
 
-    nome = buscar_nome()
+    nome = buscar_nome(usuario_id)
 
-    xp = buscar_xp()
+    xp = buscar_xp(usuario_id)
 
-    streak, _ = buscar_streak()
+    streak, _ = buscar_streak(usuario_id)
 
-    quizzes = buscar_total_quizzes()
+    quizzes = buscar_total_quizzes(usuario_id)
 
-    conquistas = buscar_total_conquistas()
+    conquistas = buscar_total_conquistas(usuario_id)
 
-    planos = buscar_total_planos()
+    planos = buscar_total_planos(usuario_id)
 
-    missoes = buscar_total_missoes()
+    missoes = buscar_total_missoes(usuario_id)
 
-    acertos = buscar_total_acertos()
+    acertos = buscar_total_acertos(usuario_id)
 
-    perguntas = buscar_total_perguntas()
+    perguntas = buscar_total_perguntas(usuario_id)
 
-    media = buscar_media_quizzes()
+    media = buscar_media_quizzes(usuario_id)
 
     rank = nivel_xp(xp)
 

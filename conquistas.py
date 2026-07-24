@@ -8,36 +8,36 @@ CABECALHO = (
 )
 
 
-def carregar_conquistas() -> list[str]:
+def carregar_conquistas(usuario_id: int) -> list[str]:
     """
-    Retorna a lista de conquistas salvas.
+    Retorna a lista de conquistas do usuário.
     """
-    return buscar_conquistas()
+    return buscar_conquistas(usuario_id)
 
 
-def desbloquear(nome: str) -> None:
+def desbloquear(usuario_id: int, nome: str) -> None:
     """
     Desbloqueia uma conquista caso ela ainda não exista.
     """
 
-    conquistas = carregar_conquistas()
+    conquistas = carregar_conquistas(usuario_id)
 
     if nome not in conquistas:
-        salvar_conquista(nome)
+        salvar_conquista(usuario_id, nome)
 
         print("\n🏆 NOVA CONQUISTA DESBLOQUEADA!")
         print(f"⭐ {nome}")
 
-             
-def mostrar_conquistas() -> None:
+
+def mostrar_conquistas(usuario_id: int) -> None:
     """
     Exibe todas as conquistas do aluno.
     """
 
-    conquistas = carregar_conquistas()
+    conquistas = carregar_conquistas(usuario_id)
 
     print(CABECALHO)
-    
+
     if not conquistas:
         print("Nenhuma conquista ainda.")
         return

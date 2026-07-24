@@ -27,6 +27,7 @@ from estatisticas import (
     media_quizzes,
     nivel_aluno,
 )
+import xp
 
 
 
@@ -37,25 +38,28 @@ def main():
     usuario = autenticar()
 
     if usuario is None:
+        print("\nAté a próxima!")
         return
 
-    nome = usuario[1] 
+    nome = usuario[1]
+    usuario_id = usuario[0] 
 
     while True:
 
         # Atualiza informações do Dashboard
-        quizzes = total_quizzes()
-        xp = carregar_xp(usuario[0])
+        quizzes = total_quizzes(usuario_id)
+        xp = carregar_xp(usuario_id)
         barra, porcentagem, limite = barra_xp(xp)
-        media = media_quizzes()
+        media = media_quizzes(usuario_id)
         nivel = nivel_aluno(media)
         rank = nivel_xp(xp)
-        streak = atualizar_streak()
-        conquistas = carregar_conquistas()
+        streak = atualizar_streak(usuario_id)
+        conquistas = carregar_conquistas(usuario_id)
 
         total_conquistas = len(conquistas)
 
         mostrar_dashboard(
+            usuario_id,
             nome,
             rank,
             nivel,
@@ -102,22 +106,22 @@ def main():
             plano_estudos()
                  
         elif opcao == "10":
-            ver_planos()
+            ver_planos(usuario_id)
 
         elif opcao == "11":
-            quiz_python()
+            quiz_python(usuario_id)
 
         elif opcao == "12":
-            mostrar_historico()
+            mostrar_historico(usuario_id)
 
         elif opcao == "13":
-            mostrar_conquistas()
+            mostrar_conquistas(usuario_id)
 
         elif opcao == "14":
-            mostrar_relatorio()
+            mostrar_relatorio(usuario_id)
 
         elif opcao == "15":
-            mostrar_desempenho()
+            mostrar_desempenho(usuario_id)
 
         elif opcao == "0":
             print("\nAté a próxima!")

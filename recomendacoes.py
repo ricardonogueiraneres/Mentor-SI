@@ -5,15 +5,15 @@ from repositorio import (
 )
 
 
-def gerar_recomendacao():
+def gerar_recomendacao(usuario_id):
     """
     Analisa os dados do aluno e retorna
     uma recomendação personalizada.
     """
 
-    xp = buscar_xp()
-    quizzes = buscar_total_quizzes()
-    streak, _ = buscar_streak()
+    xp = buscar_xp(usuario_id)
+    quizzes = buscar_total_quizzes(usuario_id)
+    streak, _ = buscar_streak(usuario_id)
 
     # Pouca experiência
     if quizzes == 0:

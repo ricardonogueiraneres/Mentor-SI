@@ -4,6 +4,7 @@ from recomendacoes import gerar_recomendacao
 LINHA = "══════════════════════════════════════════════"
 
 def mostrar_dashboard(
+    usuario_id: int,
     nome: str,
     rank: str,
     nivel: int,
@@ -49,7 +50,7 @@ def mostrar_dashboard(
     print(f"📈 Média.............. {media:.1f}/3")
 
     print("\n══════════════ 🤖 IA RECOMENDA ═════════════")
-    print(f"💡 {gerar_recomendacao()}")
+    print(f"💡 {gerar_recomendacao(usuario_id)}")
     print("\n══════════════ 📚 ESTUDOS ══════════════")
     print("1  - Python")
     print("2  - Algoritmos")

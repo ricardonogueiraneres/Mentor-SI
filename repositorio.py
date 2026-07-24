@@ -49,15 +49,15 @@ def existe_usuario():
 
     return quantidade > 0
 
-def buscar_nome():
+def buscar_nome(usuario_id):
 
     conexao, cursor = abrir_cursor()
 
     cursor.execute("""
         SELECT nome
         FROM usuario
-        WHERE id = 1
-    """)
+        WHERE id = ?
+    """, (usuario_id,))
 
     resultado = cursor.fetchone()
 
@@ -66,7 +66,7 @@ def buscar_nome():
     if resultado:
         return resultado[0]
 
-    return None
+    return ""
 
 
 def salvar_usuario(nome, xp=0, streak=0):
@@ -133,15 +133,15 @@ def atualizar_xp(usuario_id, xp):
 # STREAK
 # ==========================
 
-def buscar_streak():
+def buscar_streak(usuario_id):
 
     conexao, cursor = abrir_cursor()
 
     cursor.execute("""
         SELECT streak, ultima_data
         FROM usuario
-        WHERE id = 1
-    """)
+        WHERE id = ?
+    """, (usuario_id,))
 
     resultado = cursor.fetchone()
 
@@ -152,15 +152,15 @@ def buscar_streak():
 
     return 0, ""
 
-def atualizar_streak_bd(dias, data):
+def atualizar_streak_bd(usuario_id, dias, data):
 
     conexao, cursor = abrir_cursor()
 
     cursor.execute("""
         UPDATE usuario
         SET streak = ?, ultima_data = ?
-        WHERE id = 1
-    """, (dias, data))
+        WHERE id = ?
+    """, (dias, data, usuario_id))
 
     fechar_cursor(conexao)
 
@@ -168,15 +168,15 @@ def atualizar_streak_bd(dias, data):
 # CONQUISTAS
 # ==========================
 
-def buscar_conquistas():
+def buscar_conquistas(usuario_id):
 
     conexao, cursor = abrir_cursor()
 
     cursor.execute("""
         SELECT nome
         FROM conquistas
-        WHERE usuario_id = 1
-    """)
+        WHERE usuario_id = ?
+    """, (usuario_id,))
 
     resultado = cursor.fetchall()
 
@@ -184,26 +184,26 @@ def buscar_conquistas():
 
     return [linha[0] for linha in resultado]
 
-def salvar_conquista(nome):
+def salvar_conquista(usuario_id, nome):
 
     conexao, cursor = abrir_cursor()
 
     cursor.execute("""
         INSERT INTO conquistas(usuario_id, nome)
         VALUES (?, ?)
-    """, (1, nome))
+    """, (usuario_id, nome))
 
     fechar_cursor(conexao)
 
-def buscar_total_conquistas():
+def buscar_total_conquistas(usuario_id):
 
     conexao, cursor = abrir_cursor()
 
     cursor.execute("""
         SELECT COUNT(*)
         FROM conquistas
-        WHERE usuario_id = 1
-    """)
+        WHERE usuario_id = ?
+    """, (usuario_id,))
 
     total = cursor.fetchone()[0]
 
@@ -215,26 +215,26 @@ def buscar_total_conquistas():
 # QUIZZES
 # ==========================
 
-def salvar_quiz(materia, pontuacao, total, data):
+def salvar_quiz(usuario_id, materia, pontuacao, total, data):
 
     conexao, cursor = abrir_cursor()
 
     cursor.execute("""
         INSERT INTO quizzes(usuario_id, materia, pontuacao, total, data)
         VALUES (?, ?, ?, ?, ?)
-    """, (1, materia, pontuacao, total, data))
+    """, (usuario_id, materia, pontuacao, total, data))
 
     fechar_cursor(conexao)
 
-def buscar_total_quizzes():
+def buscar_total_quizzes(usuario_id):
 
     conexao, cursor = abrir_cursor()
 
     cursor.execute("""
         SELECT COUNT(*)
         FROM quizzes
-        WHERE usuario_id = 1
-    """)
+        WHERE usuario_id = ?
+    """, (usuario_id,))
 
     total = cursor.fetchone()[0]
 
@@ -242,15 +242,15 @@ def buscar_total_quizzes():
 
     return total
 
-def buscar_total_acertos():
+def buscar_total_acertos(usuario_id):
 
     conexao, cursor = abrir_cursor()
 
     cursor.execute("""
         SELECT SUM(pontuacao)
         FROM quizzes
-        WHERE usuario_id = 1
-    """)
+        WHERE usuario_id = ?
+    """, (usuario_id,))
 
     resultado = cursor.fetchone()[0]
 
@@ -258,15 +258,15 @@ def buscar_total_acertos():
 
     return resultado if resultado else 0
 
-def buscar_total_perguntas():
+def buscar_total_perguntas(usuario_id):
 
     conexao, cursor = abrir_cursor()
 
     cursor.execute("""
         SELECT SUM(total)
         FROM quizzes
-        WHERE usuario_id = 1
-    """)
+        WHERE usuario_id = ?
+    """, (usuario_id,))
 
     resultado = cursor.fetchone()[0]
 
@@ -274,15 +274,15 @@ def buscar_total_perguntas():
 
     return resultado if resultado else 0
 
-def buscar_media_quizzes():
+def buscar_media_quizzes(usuario_id):
 
     conexao, cursor = abrir_cursor()
 
     cursor.execute("""
         SELECT AVG(pontuacao)
         FROM quizzes
-        WHERE usuario_id = 1
-    """)
+        WHERE usuario_id = ?
+    """, (usuario_id,))
 
     resultado = cursor.fetchone()[0]
 
@@ -290,7 +290,7 @@ def buscar_media_quizzes():
 
     return resultado if resultado else 0
 
-def buscar_desempenho_por_materia():
+def buscar_desempenho_por_materia(usuario_id):
 
     conexao, cursor = abrir_cursor()
 
@@ -302,10 +302,10 @@ def buscar_desempenho_por_materia():
             SUM(total) AS perguntas,
             AVG(pontuacao) AS media
         FROM quizzes
-        WHERE usuario_id = 1
+        WHERE usuario_id = ?
         GROUP BY materia
         ORDER BY media DESC
-    """)
+    """, (usuario_id,))
 
     resultado = cursor.fetchall()
 
@@ -313,7 +313,7 @@ def buscar_desempenho_por_materia():
 
     return resultado
 
-def buscar_historico_quizzes():
+def buscar_historico_quizzes(usuario_id):
 
     conexao, cursor = abrir_cursor()
 
@@ -324,9 +324,9 @@ def buscar_historico_quizzes():
             pontuacao,
             total
         FROM quizzes
-        WHERE usuario_id = 1
+        WHERE usuario_id = ?
         ORDER BY id DESC
-    """)
+    """, (usuario_id,))
 
     historico = cursor.fetchall()
 
@@ -431,15 +431,15 @@ def atualizar_missao(data, nome):
 
     fechar_cursor(conexao)
 
-def buscar_total_planos():
+def buscar_total_planos(usuario_id):
 
     conexao, cursor = abrir_cursor()
 
     cursor.execute("""
         SELECT COUNT(*)
         FROM planos
-        WHERE usuario_id = 1
-    """)
+        WHERE usuario_id = ?
+    """, (usuario_id,))
 
     total = cursor.fetchone()[0]
 
@@ -447,16 +447,16 @@ def buscar_total_planos():
 
     return total
 
-def buscar_total_missoes():
+def buscar_total_missoes(usuario_id):
 
     conexao, cursor = abrir_cursor()
 
     cursor.execute("""
         SELECT COUNT(*)
         FROM missoes
-        WHERE usuario_id = 1
+        WHERE usuario_id = ?
         AND concluida = 1
-    """)
+    """, (usuario_id,))
 
     total = cursor.fetchone()[0]
 

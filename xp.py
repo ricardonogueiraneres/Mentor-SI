@@ -1,31 +1,29 @@
 from repositorio import buscar_xp, atualizar_xp
 
-def carregar_xp() -> int:
+
+def carregar_xp(usuario_id: int) -> int:
     """
-    Retorna o XP atual do usuário.
+    Retorna o XP do usuário informado.
     """
+    return buscar_xp(usuario_id)
 
-    return buscar_xp()
 
-
-def salvar_xp(xp: int) -> None:
+def salvar_xp(usuario_id: int, xp: int) -> None:
     """
-    Salva o XP atualizado no banco de dados.
+    Salva o XP do usuário.
     """
+    atualizar_xp(usuario_id, xp)
 
-    atualizar_xp(xp)
 
-    
-def adicionar_xp(valor: int) -> int:
+def adicionar_xp(usuario_id: int, valor: int) -> int:
     """
     Adiciona XP ao usuário e salva o novo valor.
     """
-
-    xp = carregar_xp()
+    xp = carregar_xp(usuario_id)
 
     xp += valor
 
-    salvar_xp(xp)
+    salvar_xp(usuario_id, xp)
 
     return xp
 
@@ -52,11 +50,10 @@ def nivel_xp(xp: int) -> str:
 
     return "👑 Mestre Mentor"
 
-    
+
 def barra_xp(xp: int) -> tuple[str, int, int]:
     """
-    Gera a barra de progresso do XP e retorna a barra,
-    a porcentagem e o limite do nível atual.
+    Gera a barra de progresso do XP.
     """
 
     if xp < 100:

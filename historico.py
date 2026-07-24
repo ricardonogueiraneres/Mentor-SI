@@ -4,13 +4,13 @@ LINHA = "───────────────────────�
 
 
 
-def mostrar_historico() -> None:
+def mostrar_historico(usuario_id: int) -> None:
     """
     Exibe o histórico dos quizzes realizados pelo aluno.
     """
 
 
-    historico = buscar_historico_quizzes()
+    historico = buscar_historico_quizzes(usuario_id)
 
     print("\n╔══════════════════════════════════════════════════════╗")
     print("║             📚 HISTÓRICO DE DESEMPENHO              ║")

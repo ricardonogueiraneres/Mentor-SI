@@ -38,7 +38,7 @@ def fazer_pergunta(
     return 0
 
 
-def quiz_python() -> None:
+def quiz_python(usuario_id: int) -> None:
     """
     Executa o quiz de Python, registra o resultado,
     concede XP e verifica missões e conquistas.
@@ -93,13 +93,13 @@ def quiz_python() -> None:
     print(f"Sua pontuação foi: {pontos}/{TOTAL_PERGUNTAS}")
 
     # XP por concluir o quiz
-    xp = adicionar_xp(XP_QUIZ)
+    xp = adicionar_xp(usuario_id, XP_QUIZ)
 
     print(f"\n🎉 Você ganhou +{XP_QUIZ} XP!")
 
     # Bônus por acertar todas
     if pontos == TOTAL_PERGUNTAS:
-        xp = adicionar_xp(XP_BONUS)
+        xp = adicionar_xp(usuario_id, XP_BONUS)
         print(f"🏅 Bônus de +{XP_BONUS} XP por acertar tudo!")
 
     print(f"⭐ XP Atual: {xp}")
@@ -107,6 +107,7 @@ def quiz_python() -> None:
     agora = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
     salvar_quiz(
+        usuario_id=usuario_id,
         materia=MATERIA,
         pontuacao=pontos,
         total=TOTAL_PERGUNTAS,
@@ -115,4 +116,4 @@ def quiz_python() -> None:
 
     concluir_missao("quiz")
     
-    desbloquear("Primeiro Quiz")
+    desbloquear(usuario_id, "Primeiro Quiz")

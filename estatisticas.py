@@ -4,12 +4,12 @@ from repositorio import (
 )
 
 
-def total_quizzes() -> int:
-    return buscar_total_quizzes()
+def total_quizzes(usuario_id: int) -> int:
+    return buscar_total_quizzes(usuario_id)
 
 
-def media_quizzes() -> float:
-    return buscar_media_quizzes()
+def media_quizzes(usuario_id: int) -> float:
+    return buscar_media_quizzes(usuario_id)
 
 
 def recomendacao(media: float) -> str:
@@ -43,4 +43,17 @@ def conquista(quizzes: int) -> str:
         return "🏆 Mestre dos Quizzes"
 
     return "👑 Lenda do Mentor SI"
+
+def nivel_aluno(media: float) -> str:
+    """
+    Classifica o aluno de acordo com a média dos quizzes.
+    """
+
+    if media < 1.5:
+        return "Iniciante"
+
+    if media < 2.5:
+        return "Intermediário"
+
+    return "Avançado"
     

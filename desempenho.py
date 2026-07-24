@@ -12,12 +12,12 @@ def barra(percentual: int) -> str:
 
     return "█" * cheios + "░" * (10 - cheios)
 
-def mostrar_desempenho() -> None:
+def mostrar_desempenho(usuario_id):
     """
     Exibe o desempenho do aluno por matéria.
     """
 
-    dados = buscar_desempenho_por_materia()
+    dados = buscar_desempenho_por_materia(usuario_id)
 
     print()
 
