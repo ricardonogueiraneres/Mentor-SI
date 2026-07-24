@@ -98,15 +98,15 @@ def atualizar_nome(nome):
 # XP
 # ==========================
 
-def buscar_xp():
+def buscar_xp(usuario_id):
 
     conexao, cursor = abrir_cursor()
 
     cursor.execute("""
         SELECT xp
         FROM usuario
-        WHERE id = 1
-    """)
+        WHERE id = ?
+    """, (usuario_id,))
 
     resultado = cursor.fetchone()
 
@@ -117,15 +117,15 @@ def buscar_xp():
 
     return 0
 
-def atualizar_xp(xp):
+def atualizar_xp(usuario_id, xp):
 
     conexao, cursor = abrir_cursor()
 
     cursor.execute("""
         UPDATE usuario
         SET xp = ?
-        WHERE id = 1
-    """, (xp,))
+        WHERE id = ?
+    """, (xp, usuario_id))
 
     fechar_cursor(conexao)
 

@@ -1,8 +1,8 @@
 # Banco de dados
 from banco import criar_banco
+from autenticacao import autenticar
 
 # Perfil e progresso
-from perfil import carregar_perfil
 from xp import carregar_xp, nivel_xp, barra_xp
 from streak import atualizar_streak
 from conquistas import (
@@ -34,13 +34,18 @@ def main():
     
     criar_banco()
 
-    nome = carregar_perfil()  
+    usuario = autenticar()
+
+    if usuario is None:
+        return
+
+    nome = usuario[1] 
 
     while True:
 
         # Atualiza informações do Dashboard
         quizzes = total_quizzes()
-        xp = carregar_xp()
+        xp = carregar_xp(usuario[0])
         barra, porcentagem, limite = barra_xp(xp)
         media = media_quizzes()
         nivel = nivel_aluno(media)
