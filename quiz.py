@@ -2,7 +2,7 @@ from datetime import datetime
 from xp import adicionar_xp
 from missoes import concluir_missao
 from conquistas import desbloquear
-from repositorio import salvar_quiz
+from database.repositorio import salvar_quiz
 
 XP_QUIZ = 20
 XP_BONUS = 10

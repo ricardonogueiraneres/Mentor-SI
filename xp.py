@@ -1,4 +1,4 @@
-from repositorio import buscar_xp, atualizar_xp
+from database.repositorio import buscar_xp, atualizar_xp
 
 
 def carregar_xp(usuario_id: int) -> int:

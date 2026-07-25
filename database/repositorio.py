@@ -1,4 +1,4 @@
-from banco import conectar
+from database.banco import conectar
 
 
 def abrir_cursor():
@@ -339,31 +339,31 @@ def buscar_historico_quizzes(usuario_id):
 # PLANOS DE ESTUDO
 # ==========================
 
-def salvar_plano(objetivo, horas, data):
+def salvar_plano(usuario_id, objetivo, horas, data):
 
     conexao, cursor = abrir_cursor()
 
     cursor.execute("""
         INSERT INTO planos(usuario_id, objetivo, horas, data)
         VALUES (?, ?, ?, ?)
-    """, (1, objetivo, horas, data))
+    """, (usuario_id, objetivo, horas, data))
 
     fechar_cursor(conexao)
 
-def listar_planos():
+def listar_planos(usuario_id):
 
     conexao, cursor = abrir_cursor()
 
     cursor.execute("""
         SELECT objetivo, horas, data
         FROM planos
-        WHERE usuario_id = 1
-        ORDER BY id DESC
-    """)
+        WHERE usuario_id = ?
+        ORDER BY data DESC
+    """, (usuario_id,))
 
     planos = cursor.fetchall()
 
-    fechar_conexao(conexao)
+    fechar_cursor(conexao)
 
     return planos
 

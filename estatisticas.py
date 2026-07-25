@@ -1,4 +1,4 @@
-from repositorio import (
+from database.repositorio import (
     buscar_total_quizzes,
     buscar_media_quizzes,
 )

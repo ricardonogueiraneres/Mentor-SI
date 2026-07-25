@@ -1,4 +1,4 @@
-from banco import conectar
+from database.banco import conectar
 import hashlib
 
 

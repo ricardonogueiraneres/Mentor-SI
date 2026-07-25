@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from repositorio import (
+from database.repositorio import (
     buscar_missoes,
     atualizar_missao
 )

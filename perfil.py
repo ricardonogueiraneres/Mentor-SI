@@ -1,4 +1,4 @@
-from repositorio import buscar_nome, salvar_usuario
+from database.repositorio import buscar_nome, salvar_usuario
 
 
 def carregar_perfil() -> str:

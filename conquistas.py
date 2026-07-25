@@ -1,4 +1,4 @@
-from repositorio import buscar_conquistas, salvar_conquista
+from database.repositorio import buscar_conquistas, salvar_conquista
 
 
 CABECALHO = (

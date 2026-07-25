@@ -1,5 +1,5 @@
 from datetime import datetime
-from repositorio import buscar_streak, atualizar_streak_bd
+from database.repositorio import buscar_streak, atualizar_streak_bd
 
 FORMATO_DATA = "%Y-%m-%d"
 

@@ -12,7 +12,7 @@ load_dotenv()
 
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
-def conversar(especialidade):
+def conversar(usuario_id: int, especialidade: str):
     print("\n========================")
     print(especialidade)
     print("Digite voltar para retornar ao menu.")
@@ -70,14 +70,13 @@ Nova pergunta do aluno:
         print(resposta.text)
         
         concluir_missao("ia")
-        desbloquear("Primeira conversa com IA")
+        desbloquear(usuario_id, "Primeira conversa com IA")
 
         historico.append(f"Mentor: {resposta.text}")
         historico = historico[-10:]
         
         agora = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
-        print("TESTE DATETIME")
         
         with open("historico.txt", "a", encoding="utf-8") as arquivo:
             arquivo.write(f"[{agora}]\n")
@@ -85,7 +84,7 @@ Nova pergunta do aluno:
             arquivo.write(f"Mentor: {resposta.text}\n")
             arquivo.write("-" * 50 + "\n")
         
-        xp = adicionar_xp(5)
+        xp = adicionar_xp(usuario_id, 5)
 
         print(f"\n🎉 +5 XP por estudar!")
         print(f"⭐ XP Atual: {xp}")

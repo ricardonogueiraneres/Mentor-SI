@@ -1,4 +1,4 @@
-from repositorio import (
+from database.repositorio import (
     buscar_total_quizzes,
     buscar_xp,
     buscar_streak

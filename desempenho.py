@@ -1,4 +1,4 @@
-from repositorio import buscar_desempenho_por_materia
+from database.repositorio import buscar_desempenho_por_materia
 
 LINHA = "────────────────────────────────────────────"
 

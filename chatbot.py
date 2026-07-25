@@ -1,5 +1,5 @@
 # Banco de dados
-from banco import criar_banco
+from database.banco import criar_banco
 from autenticacao import autenticar
 
 # Perfil e progresso
@@ -79,31 +79,31 @@ def main():
             continue
 
         if opcao == "1":
-            conversar("Python")
+            conversar(usuario_id, "Python")
 
         elif opcao == "2":
-            conversar("Algoritmos")
+            conversar(usuario_id, "Algoritmos")
 
         elif opcao == "3":
-            conversar("Banco de Dados")
+            conversar(usuario_id, "Banco de Dados")
 
         elif opcao == "4":
-            conversar("Redes de Computadores")
+            conversar(usuario_id, "Redes de Computadores")
 
         elif opcao == "5":
-            conversar("Inteligência Artificial")
+            conversar(usuario_id, "Inteligência Artificial")
 
         elif opcao == "6":
-            conversar("Projetos para Portfólio e GitHub")
+            conversar(usuario_id, "Projetos para Portfólio e GitHub")
 
         elif opcao == "7":
-            conversar("Carreira em Tecnologia")
+            conversar(usuario_id, "Carreira em Tecnologia")
 
         elif opcao == "8":
-            conversar("Exercícios")
+            conversar(usuario_id, "Exercícios")
 
         elif opcao == "9":
-            plano_estudos()
+            plano_estudos(usuario_id)
                  
         elif opcao == "10":
             ver_planos(usuario_id)

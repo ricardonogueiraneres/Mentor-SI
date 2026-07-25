@@ -1,14 +1,13 @@
-from datetime import datetime
-
-from repositorio import salvar_plano, listar_planos
+from database.repositorio import salvar_plano, listar_planos
 from missoes import concluir_missao
 from conquistas import desbloquear
+from datetime import datetime
 
 FORMATO_DATA = "%d/%m/%Y %H:%M"
 LINHA = "-" * 40
 
 
-def plano_estudos() -> None:
+def plano_estudos(usuario_id: int) -> None:
     """
     Gera um plano de estudos personalizado e salva no banco.
     """
@@ -55,18 +54,18 @@ def plano_estudos() -> None:
 
     agora = datetime.now().strftime(FORMATO_DATA)
 
-    salvar_plano(objetivo, horas, agora)
+    salvar_plano(usuario_id, objetivo, horas, agora)
 
     concluir_missao("plano")
-    desbloquear("Primeiro Plano de Estudos")
+    desbloquear(usuario_id, "Primeiro Plano de Estudos")
 
 
-def ver_planos() -> None:
+def ver_planos(usuario_id: int) -> None:
     """
     Exibe todos os planos de estudos cadastrados.
     """
 
-    planos = listar_planos()
+    planos = listar_planos(usuario_id)   
 
     print("\n===== PLANOS SALVOS =====")
 

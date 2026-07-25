@@ -1,4 +1,4 @@
-from repositorio import buscar_historico_quizzes
+from database.repositorio import buscar_historico_quizzes
 
 LINHA = "────────────────────────────────────────────"
 

@@ -1,4 +1,4 @@
-from repositorio import (
+from database.repositorio import (
     buscar_nome,
     buscar_xp,
     buscar_streak,
