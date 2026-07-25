@@ -1,11 +1,6 @@
-from datetime import datetime
-from xp import adicionar_xp
-from missoes import concluir_missao
-from conquistas import desbloquear
-from database.repositorio import salvar_quiz
+from services.quiz_service import finalizar_quiz
+from config import XP_QUIZ, XP_BONUS
 
-XP_QUIZ = 20
-XP_BONUS = 10
 TOTAL_PERGUNTAS = 3
 MATERIA = "Python"
 
@@ -93,27 +88,11 @@ def quiz_python(usuario_id: int) -> None:
     print(f"Sua pontuação foi: {pontos}/{TOTAL_PERGUNTAS}")
 
     # XP por concluir o quiz
-    xp = adicionar_xp(usuario_id, XP_QUIZ)
-
-    print(f"\n🎉 Você ganhou +{XP_QUIZ} XP!")
-
-    # Bônus por acertar todas
-    if pontos == TOTAL_PERGUNTAS:
-        xp = adicionar_xp(usuario_id, XP_BONUS)
-        print(f"🏅 Bônus de +{XP_BONUS} XP por acertar tudo!")
-
-    print(f"⭐ XP Atual: {xp}")
-    
-    agora = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-
-    salvar_quiz(
-        usuario_id=usuario_id,
-        materia=MATERIA,
-        pontuacao=pontos,
-        total=TOTAL_PERGUNTAS,
-        data=agora
-    )
-
-    concluir_missao("quiz")
-    
-    desbloquear(usuario_id, "Primeiro Quiz")
+    xp = finalizar_quiz(
+    usuario_id=usuario_id,
+    materia=MATERIA,
+    pontos=pontos,
+    total=TOTAL_PERGUNTAS,
+    xp_quiz=XP_QUIZ,
+    xp_bonus=XP_BONUS,
+)
