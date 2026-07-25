@@ -1,0 +1,16 @@
+"""
+Configurações globais do Mentor SI
+"""
+
+VERSAO = "7.0"
+
+# Banco
+BANCO_DADOS = "mentor.db"
+
+# XP
+XP_QUIZ = 20
+XP_BONUS = 10
+XP_IA = 5
+
+# Interface
+LINHA = "-" * 40

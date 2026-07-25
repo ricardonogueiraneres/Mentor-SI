@@ -1,7 +1,7 @@
 from datetime import datetime
-from recomendacoes import gerar_recomendacao
+from services.recomendacao_service import gerar_recomendacao
+from config import VERSAO, LINHA
 
-LINHA = "══════════════════════════════════════════════"
 
 def mostrar_dashboard(
     usuario_id: int,
@@ -25,7 +25,7 @@ def mostrar_dashboard(
 
     print()
     print("╔══════════════════════════════════════════════════════╗")
-    print("║                  🎓 MENTOR SI 6.0                   ║")
+    print(f"║                  🎓 MENTOR SI {VERSAO}                  ║")
     print("║             Seu Professor de TI com IA              ║")
     print("╠══════════════════════════════════════════════════════╣")
     print(f"║ 📅 {agora:<47} ║")

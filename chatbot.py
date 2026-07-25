@@ -1,34 +1,23 @@
 # Banco de dados
 from database.banco import criar_banco
 from autenticacao import autenticar
+from services.dashboard_service import obter_dashboard
 
-# Perfil e progresso
-from xp import carregar_xp, nivel_xp, barra_xp
-from streak import atualizar_streak
-from conquistas import (
-    carregar_conquistas,
-    mostrar_conquistas,
-)
+# Interface
+from dashboard import mostrar_dashboard
 
 # Estudos
 from estudos import plano_estudos, ver_planos
 from quiz import quiz_python
 from ia import conversar
 
+# Conquistas
+from conquistas import mostrar_conquistas
+
 # Relatórios
-from dashboard import mostrar_dashboard
 from historico import mostrar_historico
 from desempenho import mostrar_desempenho
 from relatorio import mostrar_relatorio
-
-# Estatísticas
-from estatisticas import (
-    total_quizzes,
-    media_quizzes,
-    nivel_aluno,
-)
-import xp
-
 
 
 def main():
@@ -47,30 +36,21 @@ def main():
     while True:
 
         # Atualiza informações do Dashboard
-        quizzes = total_quizzes(usuario_id)
-        xp = carregar_xp(usuario_id)
-        barra, porcentagem, limite = barra_xp(xp)
-        media = media_quizzes(usuario_id)
-        nivel = nivel_aluno(media)
-        rank = nivel_xp(xp)
-        streak = atualizar_streak(usuario_id)
-        conquistas = carregar_conquistas(usuario_id)
-
-        total_conquistas = len(conquistas)
+        dashboard = obter_dashboard(usuario_id)
 
         mostrar_dashboard(
             usuario_id,
             nome,
-            rank,
-            nivel,
-            xp,
-            barra,
-            porcentagem,
-            limite,
-            quizzes,
-            total_conquistas,
-            media,
-            streak,
+            dashboard["rank"],
+            dashboard["nivel"],
+            dashboard["xp"],
+            dashboard["barra"],
+            dashboard["porcentagem"],
+            dashboard["limite"],
+            dashboard["quizzes"],
+            dashboard["total_conquistas"],
+            dashboard["media"],
+            dashboard["streak"],
         )
 
         opcao = input("\nEscolha uma opção: ").strip()
