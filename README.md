@@ -51,6 +51,7 @@ Entre os principais recursos da plataforma estão:
 - 📉 Desempenho
 - 🤖 Recomendações de estudo
 - 💾 Persistência em SQLite
+- 🧪 Testes automatizados com Pytest
 
 ## 🛠 Tecnologias
 
@@ -61,6 +62,7 @@ Entre os principais recursos da plataforma estão:
 - Git
 - GitHub
 - Visual Studio Code
+- Pytest
 
 ## 📂 Estrutura do Projeto
 
@@ -152,6 +154,7 @@ Interface (CLI)
 - Multiusuário
 - SQLite
 - README profissional
+- Testes automatizados
 
 ### 🔄 Próximas versões
 
@@ -161,7 +164,6 @@ Interface (CLI)
 - API REST
 - Aplicativo Mobile
 - IA mais integrada
-- Testes automatizados
 - Sistema de desafios
 
 ## 🧠 Evolução da Arquitetura
