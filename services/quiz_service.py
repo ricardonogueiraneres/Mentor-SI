@@ -13,18 +13,26 @@ def finalizar_quiz(
     total: int,
     xp_quiz: int,
     xp_bonus: int,
-) -> int:
+) -> tuple[int, bool]:
     """
-    Salva o resultado do quiz, concede XP,
-    registra missão e desbloqueia conquistas.
+    Finaliza o quiz:
+    - adiciona XP;
+    - aplica bônus (se houver);
+    - salva o resultado;
+    - conclui missão;
+    - desbloqueia conquista.
 
-    Retorna o XP atual do usuário.
+    Retorna:
+        (xp_atual, ganhou_bonus)
     """
 
     xp = adicionar_xp(usuario_id, xp_quiz)
 
+    ganhou_bonus = False
+
     if pontos == total:
         xp = adicionar_xp(usuario_id, xp_bonus)
+        ganhou_bonus = True
 
     agora = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
@@ -40,4 +48,4 @@ def finalizar_quiz(
 
     desbloquear(usuario_id, "Primeiro Quiz")
 
-    return xp
+    return xp, ganhou_bonus

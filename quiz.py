@@ -1,5 +1,6 @@
 from services.quiz_service import finalizar_quiz
 from config import XP_QUIZ, XP_BONUS
+import xp
 
 TOTAL_PERGUNTAS = 3
 MATERIA = "Python"
@@ -88,11 +89,17 @@ def quiz_python(usuario_id: int) -> None:
     print(f"Sua pontuação foi: {pontos}/{TOTAL_PERGUNTAS}")
 
     # XP por concluir o quiz
-    xp = finalizar_quiz(
-    usuario_id=usuario_id,
-    materia=MATERIA,
-    pontos=pontos,
-    total=TOTAL_PERGUNTAS,
-    xp_quiz=XP_QUIZ,
-    xp_bonus=XP_BONUS,
-)
+    xp, ganhou_bonus = finalizar_quiz(
+        usuario_id=usuario_id,
+        materia=MATERIA,
+        pontos=pontos,
+        total=TOTAL_PERGUNTAS,
+        xp_quiz=XP_QUIZ,
+        xp_bonus=XP_BONUS,
+    )
+
+    print(f"\n🎉 Você ganhou +{XP_QUIZ} XP!")
+
+    if ganhou_bonus:
+        print(f"🏅 Bônus de +{XP_BONUS} XP por acertar tudo!")
+    print(f"⭐ XP Atual: {xp}")
