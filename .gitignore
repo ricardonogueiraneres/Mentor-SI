@@ -30,3 +30,8 @@ env/
 # Arquivos do sistema
 .DS_Store
 Thumbs.db
+
+# Cache do Python
+__pycache__/
+*.py[cod]
+*.pyo
