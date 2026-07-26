@@ -8,6 +8,7 @@ mentor.db
 
 # Histórico gerado pelo programa
 historico.txt
+__pycache__/
 
 # Cache do Python
 __pycache__/
