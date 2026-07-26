@@ -35,7 +35,21 @@ htmlcov/
 .DS_Store
 Thumbs.db
 
+# Distribuição
+build/
+dist/
+*.egg-info/
+
 # Cache do Python
 __pycache__/
 *.py[cod]
 *.pyo
+
+# Cache do pytest
+.pytest_cache/
+
+# Cache do MyPy
+.mypy_cache/
+
+# Cache do Ruff
+.ruff_cache/
