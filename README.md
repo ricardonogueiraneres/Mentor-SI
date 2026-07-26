@@ -1,12 +1,14 @@
-# 🎓 Mentor SI 
+<h1 align="center">🎓 Mentor SI</h1>
 
 <p align="center">
-  <img src="assets/banner.png" alt="Mentor SI Banner" width="100%">
+Plataforma gamificada para apoiar estudantes de Sistemas de Informação no aprendizado de programação, utilizando Python, SQLite e Inteligência Artificial.
 </p>
 
 <p align="center">
-Plataforma gamificada para o aprendizado de programação, desenvolvida em Python com IA e SQLite.
+  <img src="assets/banner.png" width="100%">
 </p>
+
+<p align="center">
 
 ![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python)
 ![SQLite](https://img.shields.io/badge/SQLite-Database-blue?logo=sqlite)
@@ -14,6 +16,8 @@ Plataforma gamificada para o aprendizado de programação, desenvolvida em Pytho
 ![GitHub](https://img.shields.io/badge/GitHub-Repository-black?logo=github)
 ![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-success)
 ![License](https://img.shields.io/badge/License-MIT-green)
+
+</p>
 
 ## 📚 Sobre o projeto
 
@@ -51,7 +55,9 @@ Entre os principais recursos da plataforma estão:
 ## 🛠 Tecnologias
 
 - Python 3.13
+- python-dotenv
 - SQLite
+- Google Gemini API
 - Git
 - GitHub
 - Visual Studio Code
@@ -60,36 +66,25 @@ Entre os principais recursos da plataforma estão:
 
 ```text
 Mentor-SI/
-│
-├── notebooks/
-├── tests/
-│
-├── chatbot.py
-├── banco.py
-├── repositorio.py
-├── perfil.py
-├── xp.py
-├── streak.py
-├── quiz.py
-├── estudos.py
-├── dashboard.py
-├── historico.py
-├── desempenho.py
-├── estatisticas.py
-├── conquistas.py
-├── missoes.py
-├── recomendacoes.py
-├── relatorio.py
-│
-├── README.md
-├── CHANGELOG.md
-├── .gitignore
-└── LICENSE
+
+assets/
+database/
+models/
+notebooks/
+prompts/
+services/
+tests/
+ui/
+utils/
+
+chatbot.py
+config.py
+README.md
 ```
 
 ## 📋 Requisitos
 
-- Python 3.11 ou superior
+- Python 3.13 ou superior
 - SQLite (já incluído no Python)
 - VS Code (opcional)
 
@@ -113,6 +108,12 @@ cd Mentor-SI
 python chatbot.py
 ```
 
+4. Configure o arquivo `.env`
+
+```env
+GEMINI_API_KEY=sua_chave_aqui
+```
+
 Ao iniciar o sistema você poderá:
 
 - cadastrar seu perfil;
@@ -123,28 +124,73 @@ Ao iniciar o sistema você poderá:
 - visualizar seu dashboard;
 - criar planos de estudo.
 
+## 🏛 Arquitetura
+
+O Mentor SI foi desenvolvido utilizando uma arquitetura modular para facilitar manutenção, testes e evolução do sistema.
+
+```text
+Interface (CLI)
+        │
+        ▼
+     Services
+        │
+        ▼
+    Database
+        │
+        ▼
+      SQLite
+```
+
 ## 🚀 Roadmap
 
-### ✅ Versão 6.0
+### ✅ Versão 7.x
 
-- Sistema de XP
-- Sistema de Streak
-- Sistema de Conquistas
-- Dashboard
-- Quiz
-- Histórico
+- Arquitetura em camadas
+- Dashboard Service
+- Quiz Service
+- Config centralizado
+- Multiusuário
 - SQLite
+- README profissional
 
 ### 🔄 Próximas versões
 
 - Interface gráfica
-- Login de usuários
-- Dashboard com gráficos
 - Flashcards
-- IA integrada
-- Exportação em PDF
-- Ranking
-- Tema escuro
+- Dashboard Web
+- API REST
+- Aplicativo Mobile
+- IA mais integrada
+- Testes automatizados
+- Sistema de desafios
+
+## 🧠 Evolução da Arquitetura
+
+Durante o desenvolvimento, o Mentor SI passou por diversas refatorações para melhorar a organização e a manutenção do código.
+
+Principais melhorias:
+
+- Separação em camadas (`services`, `database`, `ui`, `models`)
+- Centralização das configurações em `config.py`
+- Refatoração do Dashboard para `dashboard_service.py`
+- Refatoração do Quiz para `quiz_service.py`
+- Uso do Git com commits por sprint
+- Estrutura preparada para crescimento futuro
+
+## 🚀 Evolução do Projeto
+
+O Mentor SI iniciou como um projeto simples em Python e evoluiu gradualmente para uma arquitetura modular.
+
+Principais melhorias implementadas:
+
+- ✔ Sistema Multiusuário
+- ✔ SQLite
+- ✔ Dashboard
+- ✔ Sistema de XP
+- ✔ Sistema de Conquistas
+- ✔ Refatoração para Services
+- ✔ Configurações centralizadas
+- ✔ Versionamento com Git
 
 ## 📄 Licença
 
@@ -158,8 +204,11 @@ Foi desenvolvido para fins de estudo, prática e construção de portfólio.
 
 🎓 Estudante de Sistemas de Informação
 
-💻 Apaixonado por Python, Inteligência Artificial e desenvolvimento de software.
+💻 Desenvolvedor Python | Inteligência Artificial | Automação
 
-🔗 **GitHub:** [ricardonogueiraneres](https://github.com/ricardonogueiraneres)
+📍 Brasília - DF
+
+🔗 GitHub:
+https://github.com/ricardonogueiraneres
 
 ⭐ Se este projeto foi útil para você, considere deixar uma estrela no repositório.
