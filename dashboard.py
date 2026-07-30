@@ -16,6 +16,9 @@ def mostrar_dashboard(
     total_conquistas: int,
     media: float,
     streak: int,
+    objetivo: str,
+    proximo_desafio: str,
+    meta_semanal: str,
 ) -> None:
     """
     Exibe o painel principal do Mentor SI.
@@ -34,23 +37,43 @@ def mostrar_dashboard(
 
     print("══════════════ 👤 PERFIL ══════════════")
     print(f"👤 Aluno............... {nome}")
+    print(f"🎯 Objetivo............ {objetivo if objetivo else 'Não definido'}")
     print(f"🎖️ Rank................ {rank}")
     print(f"🏆 Nível............... {nivel}")
+
     texto = "dia" if streak == 1 else "dias"
     print(f"🔥 Sequência........... {streak} {texto}")
 
     print("\n══════════════ ⭐ PROGRESSO ═════════════")
-    print(f"⭐ XP.................. {xp}")
-    print(f"📊 Barra............... {barra} {porcentagem}%")
+
+    print(f"⭐ XP Atual............. {xp}")
+    print(f"📈 Evolução............ {barra}")
+    print(f"📊 Progresso........... {porcentagem}%")
     print(f"🎯 Próximo nível....... {limite} XP")
 
     print("\n══════════════ 📊 ESTATÍSTICAS ═════════════")
     print(f"🧠 Quizzes............ {quizzes}")
     print(f"🏅 Conquistas......... {total_conquistas}")
-    print(f"📈 Média.............. {media:.1f}/3")
+    print(f"📈 Média Geral........ {media:.1f}/3")
 
     print("\n══════════════ 🤖 IA RECOMENDA ═════════════")
-    print(f"💡 {gerar_recomendacao(usuario_id)}")
+    print("💡 Dica de hoje:")
+    print(f"   ➜ {gerar_recomendacao(usuario_id)}")
+
+    print("\n══════════════ 🤖 AI COACH ═════════════")
+
+    print("💬 Recomendações para você")
+
+    print("\n🚀 Próximo desafio:")
+    print(f"   ➜ {proximo_desafio}")
+
+    print("\n📅 Meta da semana:")
+    print(f"   ➜ {meta_semanal}")
+
+    print("\n" + "═" * 54)
+    print("              MENU PRINCIPAL")
+    print("═" * 54)
+
     print("\n══════════════ 📚 ESTUDOS ══════════════")
     print("1  - Python")
     print("2  - Algoritmos")
@@ -71,7 +94,13 @@ def mostrar_dashboard(
     print("13 - Ver Conquistas")
     print("14 - Relatório Completo")
     print("15 - Desempenho por Matéria")
+    print("16 - Objetivo Profissional")
+    print("17 - AI Coach")
+    print("18 - Roadmap para o Primeiro Emprego")
 
     print("\n══════════════ SISTEMA ══════════════")
     print("0  - Sair")
+
+    print("\n💻 Continue evoluindo um código por dia!")
+
     print(LINHA)

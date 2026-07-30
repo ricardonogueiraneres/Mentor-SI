@@ -44,8 +44,14 @@ def finalizar_quiz(
         data=agora,
     )
 
-    concluir_missao("quiz")
+    concluir_missao(
+        usuario_id,
+        "quiz"
+    )
 
-    desbloquear(usuario_id, "Primeiro Quiz")
+    desbloquear(
+        usuario_id,
+        "Primeiro Quiz"
+    )
 
     return xp, ganhou_bonus

@@ -29,10 +29,19 @@ def criar_banco():
             senha TEXT NOT NULL,
             xp INTEGER DEFAULT 0,
             streak INTEGER DEFAULT 0,
-            ultima_data TEXT DEFAULT ''
+            ultima_data TEXT DEFAULT '',
+            objetivo_profissional TEXT DEFAULT ''
         )
     """)
 
+    try:
+        cursor.execute("""
+            ALTER TABLE usuario
+            ADD COLUMN objetivo_profissional TEXT DEFAULT ''
+        """)
+    except sqlite3.OperationalError:
+        # A coluna já existe
+        pass
 
     # ==========================
     # TABELA QUIZZES

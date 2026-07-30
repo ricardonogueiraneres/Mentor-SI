@@ -1,4 +1,6 @@
 from conquistas import carregar_conquistas
+from database.repositorio import buscar_objetivo_profissional
+from services.ai_coach import gerar_feedback
 
 from estatisticas import (
     total_quizzes,
@@ -33,6 +35,10 @@ def obter_dashboard(usuario_id: int) -> dict:
 
     conquistas = carregar_conquistas(usuario_id)
 
+    objetivo = buscar_objetivo_profissional(usuario_id)
+
+    coach = gerar_feedback(usuario_id)
+
     return {
         "quizzes": quizzes,
         "xp": xp,
@@ -44,4 +50,8 @@ def obter_dashboard(usuario_id: int) -> dict:
         "rank": rank,
         "streak": streak,
         "total_conquistas": len(conquistas),
+        
+        "objetivo": objetivo,
+        "proximo_desafio": coach["proximo_desafio"],
+        "meta_semanal": coach["meta_semanal"],
     }

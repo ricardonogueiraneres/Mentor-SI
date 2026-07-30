@@ -6,11 +6,11 @@ from database.repositorio import (
 )
 
 
-def mostrar_missoes():
+def mostrar_missoes(usuario_id):
 
     hoje = datetime.now().strftime("%d/%m/%Y")
 
-    missoes = buscar_missoes(hoje)
+    missoes = buscar_missoes(usuario_id, hoje)
 
     print("\n==========================")
     print("📅 MISSÕES DE HOJE")
@@ -28,14 +28,14 @@ def mostrar_missoes():
     print(f"📈 Progresso: {concluidas}/3 ({porcentagem}%)")
 
 
-def concluir_missao(nome):
+def concluir_missao(usuario_id, nome):
 
     hoje = datetime.now().strftime("%d/%m/%Y")
 
-    missoes = buscar_missoes(hoje)
+    missoes = buscar_missoes(usuario_id, hoje)
 
     if not missoes[nome]:
 
-        atualizar_missao(hoje, nome)
+        atualizar_missao(usuario_id, hoje, nome)
 
         print(f"\n🎯 Missão '{nome}' concluída!")

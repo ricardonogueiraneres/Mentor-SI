@@ -2,6 +2,14 @@
 from database.banco import criar_banco
 from autenticacao import autenticar
 from services.dashboard_service import obter_dashboard
+from services.ai_coach import mostrar_feedback
+from services.objetivo_profissional import (
+    definir_objetivo,
+    mostrar_objetivo
+)
+
+from database.repositorio import buscar_objetivo_profissional
+from roadmap import mostrar_roadmap
 
 # Interface
 from dashboard import mostrar_dashboard
@@ -38,19 +46,22 @@ def main():
         # Atualiza informações do Dashboard
         dashboard = obter_dashboard(usuario_id)
 
-        mostrar_dashboard(
-            usuario_id,
-            nome,
-            dashboard["rank"],
-            dashboard["nivel"],
-            dashboard["xp"],
-            dashboard["barra"],
-            dashboard["porcentagem"],
-            dashboard["limite"],
-            dashboard["quizzes"],
-            dashboard["total_conquistas"],
-            dashboard["media"],
-            dashboard["streak"],
+        mostrar_dashboard( 
+            usuario_id, 
+            nome, 
+            dashboard["rank"], 
+            dashboard["nivel"], 
+            dashboard["xp"], 
+            dashboard["barra"], 
+            dashboard["porcentagem"], 
+            dashboard["limite"], 
+            dashboard["quizzes"], 
+            dashboard["total_conquistas"], 
+            dashboard["media"], 
+            dashboard["streak"], 
+            dashboard["objetivo"],
+            dashboard["proximo_desafio"],
+            dashboard["meta_semanal"],
         )
 
         opcao = input("\nEscolha uma opção: ").strip()
@@ -102,6 +113,30 @@ def main():
 
         elif opcao == "15":
             mostrar_desempenho(usuario_id)
+
+        elif opcao == "16":
+
+            objetivo = buscar_objetivo_profissional(usuario_id)
+
+            if not objetivo:
+                print("\nVocê ainda não definiu um objetivo profissional.")
+                definir_objetivo(usuario_id)
+
+            else:
+                mostrar_objetivo(usuario_id)
+
+                alterar = input(
+                    "\nDeseja alterar seu objetivo? (s/n): "
+                ).strip().lower()
+
+                if alterar == "s":
+                    definir_objetivo(usuario_id)
+
+        elif opcao == "17":
+            mostrar_feedback(usuario_id)
+
+        elif opcao == "18":
+            mostrar_roadmap(usuario_id)
 
         elif opcao == "0":
             print("\nAté a próxima!")

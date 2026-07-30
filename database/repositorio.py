@@ -95,6 +95,43 @@ def atualizar_nome(nome):
 
 
 # ==========================
+# OBJETIVO PROFISSIONAL
+# ==========================
+
+def salvar_objetivo_profissional(usuario_id, objetivo):
+
+    conexao, cursor = abrir_cursor()
+
+    cursor.execute("""
+        UPDATE usuario
+        SET objetivo_profissional = ?
+        WHERE id = ?
+    """, (objetivo, usuario_id))
+
+    fechar_cursor(conexao)
+
+
+def buscar_objetivo_profissional(usuario_id):
+
+    conexao, cursor = abrir_cursor()
+
+    cursor.execute("""
+        SELECT objetivo_profissional
+        FROM usuario
+        WHERE id = ?
+    """, (usuario_id,))
+
+    resultado = cursor.fetchone()
+
+    fechar_conexao(conexao)
+
+    if resultado:
+        return resultado[0]
+
+    return ""
+
+
+# ==========================
 # XP
 # ==========================
 
@@ -372,16 +409,16 @@ def listar_planos(usuario_id):
 # MISSÕES
 # ==========================
 
-def criar_missoes_do_dia(data):
+def criar_missoes_do_dia(usuario_id, data):
 
     conexao, cursor = abrir_cursor()
 
     cursor.execute("""
         SELECT COUNT(*)
         FROM missoes
-        WHERE usuario_id = 1
+        WHERE usuario_id = ?
         AND data = ?
-    """, (data,))
+    """, (usuario_id, data))
 
     if cursor.fetchone()[0] == 0:
 
@@ -391,22 +428,22 @@ def criar_missoes_do_dia(data):
                 INSERT INTO missoes
                 (usuario_id, data, missao, concluida)
                 VALUES (?, ?, ?, ?)
-            """, (1, data, missao, 0))
+            """, (usuario_id, data, missao, 0))
 
     fechar_cursor(conexao)
 
-def buscar_missoes(data):
+def buscar_missoes(usuario_id, data):
 
-    criar_missoes_do_dia(data)
+    criar_missoes_do_dia(usuario_id, data)
 
     conexao, cursor = abrir_cursor()
 
     cursor.execute("""
         SELECT missao, concluida
         FROM missoes
-        WHERE usuario_id = 1
+        WHERE usuario_id = ?
         AND data = ?
-    """, (data,))
+    """, (usuario_id, data))
 
     resultado = cursor.fetchall()
 
@@ -417,17 +454,17 @@ def buscar_missoes(data):
         for nome, concluida in resultado
     }
 
-def atualizar_missao(data, nome):
+def atualizar_missao(usuario_id, data, nome):
 
     conexao, cursor = abrir_cursor()
 
     cursor.execute("""
         UPDATE missoes
         SET concluida = 1
-        WHERE usuario_id = 1
+        WHERE usuario_id = ?
         AND data = ?
         AND missao = ?
-    """, (data, nome))
+    """, (usuario_id, data, nome))
 
     fechar_cursor(conexao)
 
