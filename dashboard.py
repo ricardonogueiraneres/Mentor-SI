@@ -3,6 +3,11 @@ from services.recomendacao_service import gerar_recomendacao
 from config import VERSAO, LINHA
 
 
+def desenhar_barra(percentual: int) -> str:
+    preenchido = percentual // 10
+    vazio = 10 - preenchido
+    return "█" * preenchido + "░" * vazio
+
 def mostrar_dashboard(
     usuario_id: int,
     nome: str,
@@ -17,6 +22,7 @@ def mostrar_dashboard(
     media: float,
     streak: int,
     objetivo: str,
+    progresso_materias: dict,
     proximo_desafio: str,
     meta_semanal: str,
 ) -> None:
@@ -55,6 +61,21 @@ def mostrar_dashboard(
     print(f"🧠 Quizzes............ {quizzes}")
     print(f"🏅 Conquistas......... {total_conquistas}")
     print(f"📈 Média Geral........ {media:.1f}/3")
+
+    print("\n══════════════ 📚 PROGRESSO POR MATÉRIA ═════════════")
+
+    icones = {
+        "Python": "🐍",
+        "Algoritmos": "🧠",
+        "Banco de Dados": "🗄",
+        "Redes": "🌐",
+        "Inteligência Artificial": "🤖",
+    }
+
+    for materia, percentual in progresso_materias.items():
+        barra_materia = desenhar_barra(percentual)
+        icone = icones.get(materia, "📘")
+        print(f"{icone} {materia:<24} {barra_materia} {percentual}%")
 
     print("\n══════════════ 🤖 IA RECOMENDA ═════════════")
     print("💡 Dica de hoje:")

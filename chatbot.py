@@ -60,6 +60,7 @@ def main():
             dashboard["media"], 
             dashboard["streak"], 
             dashboard["objetivo"],
+            dashboard["progresso_materias"],
             dashboard["proximo_desafio"],
             dashboard["meta_semanal"],
         )

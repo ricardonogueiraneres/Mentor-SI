@@ -1,6 +1,7 @@
 from conquistas import carregar_conquistas
 from database.repositorio import buscar_objetivo_profissional
 from services.ai_coach import gerar_feedback
+from services.progresso_materias import obter_progresso_materias
 
 from estatisticas import (
     total_quizzes,
@@ -39,6 +40,8 @@ def obter_dashboard(usuario_id: int) -> dict:
 
     coach = gerar_feedback(usuario_id)
 
+    progresso_materias = obter_progresso_materias(usuario_id)
+
     return {
         "quizzes": quizzes,
         "xp": xp,
@@ -54,4 +57,5 @@ def obter_dashboard(usuario_id: int) -> dict:
         "objetivo": objetivo,
         "proximo_desafio": coach["proximo_desafio"],
         "meta_semanal": coach["meta_semanal"],
+        "progresso_materias": progresso_materias,
     }
