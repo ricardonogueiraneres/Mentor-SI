@@ -8,6 +8,11 @@ from services.objetivo_profissional import (
     mostrar_objetivo
 )
 
+from semestre import (
+    cadastrar_semestre,
+    ver_semestre,
+)
+
 from database.repositorio import buscar_objetivo_profissional
 from roadmap import mostrar_roadmap
 
@@ -63,6 +68,8 @@ def main():
             dashboard["progresso_materias"],
             dashboard["proximo_desafio"],
             dashboard["meta_semanal"],
+            dashboard["semestre"],
+            dashboard["materias_semestre"],
         )
 
         opcao = input("\nEscolha uma opção: ").strip()
@@ -138,6 +145,12 @@ def main():
 
         elif opcao == "18":
             mostrar_roadmap(usuario_id)
+
+        elif opcao == "19":
+            cadastrar_semestre(usuario_id)
+
+        elif opcao == "20":
+            ver_semestre(usuario_id)
 
         elif opcao == "0":
             print("\nAté a próxima!")

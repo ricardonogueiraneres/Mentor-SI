@@ -25,6 +25,8 @@ def mostrar_dashboard(
     progresso_materias: dict,
     proximo_desafio: str,
     meta_semanal: str,
+    semestre,
+    materias_semestre,
 ) -> None:
     """
     Exibe o painel principal do Mentor SI.
@@ -43,12 +45,25 @@ def mostrar_dashboard(
 
     print("══════════════ 👤 PERFIL ══════════════")
     print(f"👤 Aluno............... {nome}")
+
+    texto = "dia" if streak == 1 else "dias"
+    print(f"🔥 Sequência........... {streak} {texto}")
+
     print(f"🎯 Objetivo............ {objetivo if objetivo else 'Não definido'}")
     print(f"🎖️ Rank................ {rank}")
     print(f"🏆 Nível............... {nivel}")
 
-    texto = "dia" if streak == 1 else "dias"
-    print(f"🔥 Sequência........... {streak} {texto}")
+    if semestre:
+        print("\n══════════════ 🎓 MEU SEMESTRE ══════════════")
+        print(f"🏫 {semestre['faculdade']}")
+        print(f"🎓 {semestre['curso']}")
+        print(f"📚 {semestre['semestre']}º Semestre")
+
+    if materias_semestre:
+        print("\n══════════════ 📚 MATÉRIAS DO SEMESTRE ══════════════")
+
+        for materia in materias_semestre:
+            print(f"📘 {materia['nome']}")
 
     print("\n══════════════ ⭐ PROGRESSO ═════════════")
 
@@ -118,6 +133,8 @@ def mostrar_dashboard(
     print("16 - Objetivo Profissional")
     print("17 - AI Coach")
     print("18 - Roadmap para o Primeiro Emprego")
+    print("19 - Cadastrar Meu Semestre")
+    print("20 - Ver Meu Semestre")
 
     print("\n══════════════ SISTEMA ══════════════")
     print("0  - Sair")

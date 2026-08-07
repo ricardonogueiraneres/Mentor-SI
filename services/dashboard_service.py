@@ -17,6 +17,12 @@ from xp import (
     nivel_xp,
 )
 
+from database.repositorio import (
+    buscar_objetivo_profissional,
+    buscar_semestre,
+    listar_materias_semestre,
+)
+
 
 def obter_dashboard(usuario_id: int) -> dict:
     """
@@ -38,6 +44,10 @@ def obter_dashboard(usuario_id: int) -> dict:
 
     objetivo = buscar_objetivo_profissional(usuario_id)
 
+    semestre = buscar_semestre(usuario_id)
+
+    materias_semestre = listar_materias_semestre(usuario_id)
+
     coach = gerar_feedback(usuario_id)
 
     progresso_materias = obter_progresso_materias(usuario_id)
@@ -53,6 +63,8 @@ def obter_dashboard(usuario_id: int) -> dict:
         "rank": rank,
         "streak": streak,
         "total_conquistas": len(conquistas),
+        "semestre": semestre,
+        "materias_semestre": materias_semestre,
         
         "objetivo": objetivo,
         "proximo_desafio": coach["proximo_desafio"],
