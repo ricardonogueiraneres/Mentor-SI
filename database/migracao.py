@@ -1,29 +1,47 @@
-from banco import conectar
+from database.banco import conectar
 
 
-def adicionar_colunas_login():
-    conn = conectar()
-    cursor = conn.cursor()
+def adicionar_colunas_perfil_academico():
+    conexao = conectar()
+    cursor = conexao.cursor()
 
-    # Descobre as colunas existentes
     cursor.execute("PRAGMA table_info(usuario)")
     colunas = [coluna[1] for coluna in cursor.fetchall()]
 
-    if "usuario" not in colunas:
-        cursor.execute(
-            "ALTER TABLE usuario ADD COLUMN usuario TEXT"
-        )
-        print("✅ Coluna 'usuario' adicionada.")
+    if "universidade" not in colunas:
+        cursor.execute("""
+            ALTER TABLE usuario
+            ADD COLUMN universidade TEXT DEFAULT ''
+        """)
 
-    if "senha" not in colunas:
-        cursor.execute(
-            "ALTER TABLE usuario ADD COLUMN senha TEXT"
-        )
-        print("✅ Coluna 'senha' adicionada.")
+    if "curso" not in colunas:
+        cursor.execute("""
+            ALTER TABLE usuario
+            ADD COLUMN curso TEXT DEFAULT ''
+        """)
 
-    conn.commit()
-    conn.close()
+    if "modalidade" not in colunas:
+        cursor.execute("""
+            ALTER TABLE usuario
+            ADD COLUMN modalidade TEXT DEFAULT ''
+        """)
+
+    if "semestre" not in colunas:
+        cursor.execute("""
+            ALTER TABLE usuario
+            ADD COLUMN semestre INTEGER DEFAULT 1
+        """)
+
+    if "materias" not in colunas:
+        cursor.execute("""
+            ALTER TABLE usuario
+            ADD COLUMN materias TEXT DEFAULT ''
+        """)
+
+    conexao.commit()
+    conexao.close()
 
 
 if __name__ == "__main__":
     adicionar_colunas_login()
+    adicionar_colunas_perfil_academico()

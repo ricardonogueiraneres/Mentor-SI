@@ -501,3 +501,195 @@ def buscar_total_missoes(usuario_id):
 
     return total
 
+# ==========================
+# PERFIL ACADÊMICO
+# ==========================
+
+def salvar_perfil_academico(
+    usuario_id,
+    universidade,
+    curso,
+    modalidade,
+    semestre,
+    materias
+):
+
+    conexao, cursor = abrir_cursor()
+
+    cursor.execute("""
+        UPDATE usuario
+        SET universidade = ?,
+            curso = ?,
+            modalidade = ?,
+            semestre = ?,
+            materias = ?
+        WHERE id = ?
+    """, (
+        universidade,
+        curso,
+        modalidade,
+        semestre,
+        materias,
+        usuario_id
+    ))
+
+    fechar_cursor(conexao)
+
+
+def buscar_perfil_academico(usuario_id):
+
+    conexao, cursor = abrir_cursor()
+
+    cursor.execute("""
+        SELECT
+            universidade,
+            curso,
+            modalidade,
+            semestre,
+            materias
+        FROM usuario
+        WHERE id = ?
+    """, (usuario_id,))
+
+    resultado = cursor.fetchone()
+
+    fechar_conexao(conexao)
+
+    return resultado
+
+
+# ==========================
+# SEMESTRE
+# ==========================
+
+def salvar_semestre(usuario_id, faculdade, curso, modalidade, semestre):
+
+    conexao, cursor = abrir_cursor()
+
+    cursor.execute("""
+        INSERT INTO semestre (
+            usuario_id,
+            faculdade,
+            curso,
+            modalidade,
+            semestre
+        )
+        VALUES (?, ?, ?, ?, ?)
+    """, (
+        usuario_id,
+        faculdade,
+        curso,
+        modalidade,
+        semestre
+    ))
+
+    semestre_id = cursor.lastrowid
+
+    fechar_cursor(conexao)
+
+    return semestre_id
+
+
+def buscar_semestre(usuario_id):
+
+    conexao, cursor = abrir_cursor()
+
+    cursor.execute("""
+        SELECT
+            id,
+            faculdade,
+            curso,
+            modalidade,
+            semestre
+        FROM semestre
+        WHERE usuario_id = ?
+        ORDER BY id DESC
+        LIMIT 1
+    """, (usuario_id,))
+
+    resultado = cursor.fetchone()
+
+    fechar_conexao(conexao)
+
+    return resultado
+
+
+# ==========================
+# MATÉRIAS
+# ==========================
+
+def salvar_materia(semestre_id, nome, ordem):
+
+    conexao, cursor = abrir_cursor()
+
+    cursor.execute("""
+        INSERT INTO materias(
+            semestre_id,
+            nome,
+            ordem
+        )
+        VALUES (?, ?, ?)
+    """, (
+        semestre_id,
+        nome,
+        ordem
+    ))
+
+    fechar_cursor(conexao)
+
+
+def listar_materias(semestre_id):
+
+    conexao, cursor = abrir_cursor()
+
+    cursor.execute("""
+        SELECT
+            nome,
+            progresso,
+            concluida,
+            ordem
+        FROM materias
+        WHERE semestre_id = ?
+        ORDER BY ordem
+    """, (semestre_id,))
+
+    materias = cursor.fetchall()
+
+    fechar_conexao(conexao)
+
+    return materias
+
+
+def excluir_materias(semestre_id):
+
+    conexao, cursor = abrir_cursor()
+
+    cursor.execute("""
+        DELETE FROM materias
+        WHERE semestre_id = ?
+    """, (semestre_id,))
+
+    fechar_cursor(conexao)
+
+
+def listar_materias_semestre(usuario_id):
+
+    conexao, cursor = abrir_cursor()
+
+    cursor.execute("""
+        SELECT
+            m.nome,
+            m.progresso,
+            m.concluida
+        FROM materias m
+        INNER JOIN semestre s
+            ON s.id = m.semestre_id
+        WHERE s.usuario_id = ?
+        ORDER BY m.ordem
+    """, (usuario_id,))
+
+    materias = cursor.fetchall()
+
+    fechar_conexao(conexao)
+
+    return materias

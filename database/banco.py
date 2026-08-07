@@ -1,6 +1,5 @@
 import sqlite3
 
-
 BANCO = "mentor.db"
 
 
@@ -19,7 +18,6 @@ def criar_banco():
     # ==========================
     # TABELA USUÁRIO
     # ==========================
-
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS usuario (
@@ -47,7 +45,6 @@ def criar_banco():
     # TABELA QUIZZES
     # ==========================
 
-
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS quizzes (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -57,14 +54,12 @@ def criar_banco():
             total INTEGER,
             data TEXT,
             FOREIGN KEY(usuario_id) REFERENCES usuario(id)
-        ) 
+        )
     """)
-
 
     # ==========================
     # TABELA PLANOS
     # ==========================
-
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS planos (
@@ -76,11 +71,10 @@ def criar_banco():
             FOREIGN KEY(usuario_id) REFERENCES usuario(id)
         )
     """)
-    
+
     # ==========================
     # TABELA MISSÕES
     # ==========================
-
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS missoes (
@@ -93,6 +87,9 @@ def criar_banco():
         )
     """)
 
+    # ==========================
+    # TABELA CONQUISTAS
+    # ==========================
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS conquistas (
@@ -100,9 +97,40 @@ def criar_banco():
             usuario_id INTEGER,
             nome TEXT NOT NULL,
             FOREIGN KEY(usuario_id) REFERENCES usuario(id)
-       )
+        )
     """)
 
+    # ==========================
+    # TABELA SEMESTRE
+    # ==========================
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS semestre (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            usuario_id INTEGER NOT NULL,
+            faculdade TEXT NOT NULL,
+            curso TEXT NOT NULL,
+            modalidade TEXT NOT NULL,
+            semestre INTEGER NOT NULL,
+            FOREIGN KEY(usuario_id) REFERENCES usuario(id)
+        )
+    """)
+
+    # ==========================
+    # TABELA MATÉRIAS
+    # ==========================
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS materias (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            semestre_id INTEGER NOT NULL,
+            nome TEXT NOT NULL,
+            ordem INTEGER DEFAULT 0,
+            progresso INTEGER DEFAULT 0,
+            concluida INTEGER DEFAULT 0,
+            FOREIGN KEY(semestre_id) REFERENCES semestre(id)
+        )
+    """)
 
     conexao.commit()
     conexao.close()
