@@ -405,6 +405,24 @@ def listar_planos(usuario_id):
     return planos
 
 
+def buscar_ultimo_plano(usuario_id):
+    conexao, cursor = abrir_cursor()
+
+    cursor.execute("""
+        SELECT objetivo, horas, data
+        FROM planos
+        WHERE usuario_id = ?
+        ORDER BY data DESC
+        LIMIT 1
+    """, (usuario_id,))
+
+    plano = cursor.fetchone()
+
+    fechar_conexao(conexao)
+
+    return plano
+
+
 # ==========================
 # MISSÕES
 # ==========================
