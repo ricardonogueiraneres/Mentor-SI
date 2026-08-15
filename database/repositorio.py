@@ -696,6 +696,7 @@ def listar_materias_semestre(usuario_id):
 
     cursor.execute("""
         SELECT
+            m.id,
             m.nome,
             m.progresso,
             m.concluida
