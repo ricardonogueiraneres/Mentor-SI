@@ -662,6 +662,7 @@ def listar_materias(semestre_id):
 
     cursor.execute("""
         SELECT
+            id,
             nome,
             progresso,
             concluida,
@@ -689,6 +690,20 @@ def excluir_materias(semestre_id):
 
     fechar_cursor(conexao)
 
+def atualizar_progresso_materia(materia_id, progresso):
+
+    conexao, cursor = abrir_cursor()
+
+    cursor.execute("""
+        UPDATE materias
+        SET progresso = ?
+        WHERE id = ?
+    """, (
+        progresso,
+        materia_id
+    ))
+
+    fechar_cursor(conexao)
 
 def listar_materias_semestre(usuario_id):
 
