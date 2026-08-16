@@ -694,12 +694,16 @@ def atualizar_progresso_materia(materia_id, progresso):
 
     conexao, cursor = abrir_cursor()
 
+    concluida = 1 if progresso == 100 else 0
+
     cursor.execute("""
         UPDATE materias
-        SET progresso = ?
+        SET progresso = ?,
+            concluida = ?
         WHERE id = ?
     """, (
         progresso,
+        concluida,
         materia_id
     ))
 
