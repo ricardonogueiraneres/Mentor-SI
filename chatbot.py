@@ -8,6 +8,10 @@ from services.objetivo_profissional import (
     mostrar_objetivo
 )
 
+from services.progresso_materias import (
+    gerenciar_progresso_materias
+)
+
 from semestre import (
     cadastrar_semestre,
     ver_semestre,
@@ -151,6 +155,9 @@ def main():
 
         elif opcao == "20":
             ver_semestre(usuario_id)
+
+        elif opcao == "21":
+            gerenciar_progresso_materias(usuario_id)
 
         elif opcao == "0":
             print("\nAté a próxima!")

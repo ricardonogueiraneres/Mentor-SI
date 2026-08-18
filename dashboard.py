@@ -135,6 +135,7 @@ def mostrar_dashboard(
     print("18 - Roadmap para o Primeiro Emprego")
     print("19 - Cadastrar Meu Semestre")
     print("20 - Ver Meu Semestre")
+    print("21 - Gerenciar Progresso das Matérias")
 
     print("\n══════════════ SISTEMA ══════════════")
     print("0  - Sair")
