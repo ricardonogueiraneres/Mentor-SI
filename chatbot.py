@@ -74,6 +74,7 @@ def main():
             dashboard["meta_semanal"],
             dashboard["semestre"],
             dashboard["materias_semestre"],
+            dashboard["progresso_semestre"],
         )
 
         opcao = input("\nEscolha uma opção: ").strip()

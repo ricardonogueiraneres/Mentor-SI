@@ -27,6 +27,7 @@ def mostrar_dashboard(
     meta_semanal: str,
     semestre,
     materias_semestre,
+    progresso_semestre,
 ) -> None:
     """
     Exibe o painel principal do Mentor SI.
@@ -63,7 +64,15 @@ def mostrar_dashboard(
         print("\n══════════════ 📚 MATÉRIAS DO SEMESTRE ══════════════")
 
         for materia in materias_semestre:
-            print(f"📘 {materia['nome']}")
+            print(
+                f"📘 {materia['nome']} "
+                f"({materia['progresso']}%)"
+            )
+
+    print(
+        f"\n📊 Progresso geral do semestre: "
+        f"{progresso_semestre}%"
+    )
 
     print("\n══════════════ ⭐ PROGRESSO ═════════════")
 

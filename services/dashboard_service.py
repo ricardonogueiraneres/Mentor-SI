@@ -1,7 +1,10 @@
 from conquistas import carregar_conquistas
 from database.repositorio import buscar_objetivo_profissional
 from services.ai_coach import gerar_feedback
-from services.progresso_materias import obter_progresso_materias
+from services.progresso_materias import (
+    obter_progresso_materias,
+    calcular_progresso_semestre,
+)
 
 from estatisticas import (
     total_quizzes,
@@ -48,6 +51,10 @@ def obter_dashboard(usuario_id: int) -> dict:
 
     materias_semestre = listar_materias_semestre(usuario_id)
 
+    progresso_semestre = calcular_progresso_semestre(
+        materias_semestre
+    )
+
     coach = gerar_feedback(usuario_id)
 
     progresso_materias = obter_progresso_materias(usuario_id)
@@ -65,6 +72,7 @@ def obter_dashboard(usuario_id: int) -> dict:
         "total_conquistas": len(conquistas),
         "semestre": semestre,
         "materias_semestre": materias_semestre,
+        "progresso_semestre": progresso_semestre,
         
         "objetivo": objetivo,
         "proximo_desafio": coach["proximo_desafio"],

@@ -107,3 +107,18 @@ def gerenciar_progresso_materias(usuario_id: int):
 
         else:
             print("\n❌ Opção inválida.")
+
+def calcular_progresso_semestre(materias_semestre) -> int:
+    """
+    Calcula o progresso médio das matérias do semestre.
+    """
+
+    if not materias_semestre:
+        return 0
+
+    total = sum(
+        materia["progresso"]
+        for materia in materias_semestre
+    )
+
+    return int(total / len(materias_semestre))
