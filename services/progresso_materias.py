@@ -32,6 +32,8 @@ from database.repositorio import (
     atualizar_progresso_materia,
 )
 
+from xp import adicionar_xp
+from conquistas import desbloquear
 
 def gerenciar_progresso_materias(usuario_id: int):
     """
@@ -104,6 +106,19 @@ def gerenciar_progresso_materias(usuario_id: int):
             )
 
             print("\n✅ Progresso atualizado com sucesso!")
+
+            if progresso == 100 and materia_selecionada["progresso"] < 100:
+
+                novo_xp = adicionar_xp(usuario_id, 100)
+
+                print("\n🎉 MATÉRIA CONCLUÍDA!")
+                print("🏆 +100 XP")
+                print(f"⭐ XP atual: {novo_xp}")
+
+                desbloquear(
+                    usuario_id,
+                    f"Matéria concluída: {materia_selecionada['nome']}"
+                )
 
         else:
             print("\n❌ Opção inválida.")
