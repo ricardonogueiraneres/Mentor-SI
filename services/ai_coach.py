@@ -10,9 +10,28 @@ from database.repositorio import (
 )
 
 
+def classificar_prioridade(progresso: int) -> tuple[str, str]:
+    """
+    Classifica a prioridade de estudo de acordo
+    com o progresso da matéria.
+    """
+
+    if progresso >= 100:
+        return "CONCLUÍDA", "✅"
+
+    if progresso < 30:
+        return "ALTA", "🔴"
+
+    if progresso < 70:
+        return "MÉDIA", "🟡"
+
+    return "BAIXA", "🟢"
+
+
 def escolher_materia_prioritaria(materias_semestre):
     """
-    Escolhe a matéria que precisa de mais atenção.
+    Escolhe a matéria que precisa de mais atenção
+    e informa o motivo da prioridade.
     """
 
     if not materias_semestre:
@@ -27,10 +46,134 @@ def escolher_materia_prioritaria(materias_semestre):
     if not materias_pendentes:
         return None
 
-    return min(
+    materia_prioritaria = min(
         materias_pendentes,
-        key=lambda materia: materia["progresso"]
+        key=lambda materia: (
+            materia["progresso"],
+            materia["id"]
+        )
     )
+
+    progresso = materia_prioritaria["progresso"]
+
+    materias_com_mesmo_progresso = [
+        materia
+        for materia in materias_pendentes
+        if materia["progresso"] == progresso
+    ]
+
+    if len(materias_com_mesmo_progresso) > 1:
+        motivo = (
+            f"Esta matéria está entre as que possuem menor "
+            f"progresso ({progresso}%) no seu semestre."
+        )
+    else:
+        motivo = (
+            f"Esta é atualmente a matéria com menor progresso "
+            f"do seu semestre ({progresso}%)."
+        )
+
+    prioridade, icone = classificar_prioridade(progresso)
+
+    return {
+        "materia": materia_prioritaria,
+        "motivo": motivo,
+        "prioridade": prioridade,
+        "icone": icone,
+    }
+
+
+def gerar_meta_semanal(
+    materia_prioritaria,
+    materias_semestre
+):
+    """
+    Cria uma meta semanal baseada nas matérias
+    que ainda precisam ser concluídas.
+    """
+
+    if not materia_prioritaria:
+        return "Revisar os conteúdos e concluir as matérias pendentes."
+
+    nome_prioritaria = materia_prioritaria["materia"]["nome"]
+
+    outras_materias = []
+
+    for materia in materias_semestre:
+        if (
+            materia["nome"] != nome_prioritaria
+            and materia["concluida"] == 0
+        ):
+            outras_materias.append(materia["nome"])
+
+    if outras_materias:
+        segunda_materia = outras_materias[0]
+
+        return (
+            f"Estudar '{nome_prioritaria}', "
+            f"revisar '{segunda_materia}' "
+            f"e concluir 2 quizzes."
+        )
+
+    return (
+        f"Estudar '{nome_prioritaria}' "
+        f"e concluir 2 quizzes."
+    )
+
+
+def gerar_plano_diario(
+    plano,
+    materia_prioritaria,
+    materias_semestre
+):
+    """
+    Cria o plano de estudo diário.
+    """
+
+    if not plano or not materia_prioritaria:
+        return None
+
+    horas = plano["horas"]
+
+    nome_prioritaria = materia_prioritaria["materia"]["nome"]
+
+    segunda_materia = None
+
+    for materia in materias_semestre:
+
+        if (
+            materia["nome"] != nome_prioritaria
+            and materia["concluida"] == 0
+        ):
+            segunda_materia = materia["nome"]
+            break
+
+    if horas >= 2:
+
+        if segunda_materia:
+
+            return (
+                f"📘 {nome_prioritaria}: 40 minutos\n"
+                f"📚 {segunda_materia}: 20 minutos\n"
+                "📝 Quiz: 20 minutos"
+            )
+
+        return (
+            f"📘 {nome_prioritaria}: 60 minutos\n"
+            "📝 Quiz: 20 minutos"
+        )
+
+    if horas >= 1:
+
+        return (
+            f"📘 {nome_prioritaria}: 40 minutos\n"
+            "📝 Quiz: 20 minutos"
+        )
+
+    return (
+        f"📘 {nome_prioritaria}: 20 minutos"
+    )
+
 
 def gerar_feedback(usuario_id):
 
@@ -48,83 +191,125 @@ def gerar_feedback(usuario_id):
     )
 
     motivo_prioridade = None
+    prioridade = None
+    icone_prioridade = None
 
     if materia_prioritaria:
 
-        progresso = materia_prioritaria["progresso"]
-        nome_materia = materia_prioritaria["nome"]
-
-        motivo_prioridade = (
-            f"A matéria '{nome_materia}' está com "
-            f"{progresso}% de progresso e precisa de mais atenção."
-        )
+        motivo_prioridade = materia_prioritaria["motivo"]
+        prioridade = materia_prioritaria["prioridade"]
+        icone_prioridade = materia_prioritaria["icone"]
 
     feedback = []
 
+    # ==========================================================
     # XP
+    # ==========================================================
+
     if xp < 100:
+
         feedback.append(
             "📘 Você ainda está construindo sua base em programação."
         )
 
     elif xp < 300:
+
         feedback.append(
-            "📈 Seu progresso é consistente. Continue resolvendo exercícios."
+            "📈 Seu progresso é consistente. "
+            "Continue resolvendo exercícios."
         )
 
     else:
+
         feedback.append(
-            "🚀 Excelente evolução! Está na hora de desenvolver projetos completos."
+            "🚀 Excelente evolução! "
+            "Está na hora de desenvolver projetos completos."
         )
 
-    # Quizzes
+    # ==========================================================
+    # QUIZZES
+    # ==========================================================
+
     if quizzes < 5:
+
         feedback.append(
-            "📝 Faça mais quizzes para reforçar seu aprendizado."
+            "📚 Continue realizando quizzes para reforçar seus conhecimentos."
         )
 
-    else:
-        feedback.append(
-            "✅ Você está praticando regularmente através dos quizzes."
-        )
+    elif media >= 80:
 
-    # Média
-    if media >= 80:
         feedback.append(
-            "🏆 Sua média é excelente."
+            "🏆 Sua média nos quizzes é excelente."
         )
 
     elif media >= 60:
+
         feedback.append(
             "👍 Sua média é boa, mas ainda pode melhorar."
         )
 
     else:
+
         feedback.append(
             "📚 Revise os conteúdos antes de avançar."
         )
 
-    # Objetivo profissional
+    # ==========================================================
+    # OBJETIVO PROFISSIONAL
+    # ==========================================================
+
     if objetivo:
+
         feedback.append(
             f"🎯 Objetivo profissional: {objetivo}"
         )
 
     else:
+
         feedback.append(
-            "🎯 Defina um objetivo profissional para receber recomendações mais precisas."
+            "🎯 Defina um objetivo profissional para receber "
+            "recomendações mais precisas."
         )
 
-    # Conquistas
+    # ==========================================================
+    # CONQUISTAS
+    # ==========================================================
+
     feedback.append(
         f"🏅 Conquistas desbloqueadas: {conquistas}"
     )
 
-    # Próximo desafio
+    # ==========================================================
+    # CONTEXTO ACADÊMICO
+    # ==========================================================
+
+    if semestre:
+
+        feedback.append(
+            f"🎓 Você está no {semestre['semestre']}º semestre "
+            f"de {semestre['curso']}."
+        )
+
+    if materias_semestre:
+
+        feedback.append(
+            "📚 Matérias atuais: "
+            + ", ".join(
+                materia["nome"]
+                for materia in materias_semestre
+            )
+        )
+
+    # ==========================================================
+    # PRÓXIMO DESAFIO
+    # ==========================================================
+
     if materia_prioritaria:
 
-        nome_materia = materia_prioritaria["nome"]
-        progresso = materia_prioritaria["progresso"]
+        materia = materia_prioritaria["materia"]
+
+        nome_materia = materia["nome"]
+        progresso = materia["progresso"]
 
         proximo_desafio = (
             f"Estudar '{nome_materia}' "
@@ -182,120 +367,34 @@ def gerar_feedback(usuario_id):
             "para receber desafios personalizados."
         )
 
+    # ==========================================================
+    # PLANO DIÁRIO
+    # ==========================================================
 
-    plano_diario = None
+    plano_diario = gerar_plano_diario(
+        plano,
+        materia_prioritaria,
+        materias_semestre
+    )
 
-    if plano:
-        horas = plano["horas"]
+    # ==========================================================
+    # META SEMANAL
+    # ==========================================================
 
-        if materia_prioritaria:
-            nome_materia = materia_prioritaria["nome"]
+    meta_semanal = gerar_meta_semanal(
+        materia_prioritaria,
+        materias_semestre
+    )
 
-            if horas >= 2:
-
-                segunda_materia = None
-
-                for materia in materias_semestre:
-                    if (
-                        materia["nome"] != nome_materia
-                        and materia["concluida"] == 0
-                    ):
-                        segunda_materia = materia["nome"]
-                        break
-
-                if segunda_materia:
-
-                    plano_diario = (
-                        f"📘 {nome_materia}: 60 minutos\n"
-                        f"🧠 {segunda_materia}: 40 minutos\n"
-                        "📝 Quiz: 20 minutos"
-                    )
-
-                else:
-
-                    plano_diario = (
-                        f"📘 {nome_materia}: 90 minutos\n"
-                        "📝 Quiz: 30 minutos"
-                    )
-
-            elif horas == 1:
-
-                plano_diario = (
-                    f"📘 {nome_materia}: 40 minutos\n"
-                    "📝 Quiz: 20 minutos"
-                )
-
-            else:
-
-                plano_diario = (
-                    f"📘 {nome_materia}: 30 minutos\n"
-                    "📝 Revisão: 15 minutos"
-                )
-
-    # Meta semanal
-
-    if materias_semestre:
-
-        materias_pendentes = [
-            materia
-            for materia in materias_semestre
-            if materia["concluida"] == 0
-        ]
-
-        if materias_pendentes:
-
-            materia_1 = materias_pendentes[0]["nome"]
-
-            if len(materias_pendentes) > 1:
-
-                materia_2 = materias_pendentes[1]["nome"]
-
-                meta_semanal = (
-                    f"Estudar '{materia_1}', "
-                    f"revisar '{materia_2}' "
-                    f"e concluir 2 quizzes."
-                )
-
-            else:
-
-                meta_semanal = (
-                    f"Estudar '{materia_1}' "
-                    f"e concluir 2 quizzes."
-                )
-
-        else:
-
-            meta_semanal = (
-                "Revisar as matérias concluídas "
-                "e realizar 3 quizzes."
-            )
-
-    else:
-
-        if xp < 100:
-
-            meta_semanal = (
-                "Resolver 15 exercícios e concluir 2 quizzes."
-            )
-
-        elif xp < 300:
-
-            meta_semanal = (
-                "Criar um pequeno projeto e concluir 3 quizzes."
-            )
-
-        else:
-
-            meta_semanal = (
-                "Publicar um projeto no GitHub e concluir 5 quizzes."
-            )
-
-    # Mensagem motivacional
+    # ==========================================================
+    # MENSAGEM FINAL
+    # ==========================================================
 
     if xp < 100:
 
         mensagem_final = (
-            "💪 Todo profissional começou do zero. Continue praticando!"
+            "💪 Todo profissional começou do zero. "
+            "Continue praticando!"
         )
 
     elif xp < 300:
@@ -312,33 +411,17 @@ def gerar_feedback(usuario_id):
             "Invista em projetos de portfólio."
         )
 
-    # Contexto acadêmico
-
-    if semestre:
-
-        feedback.append(
-            f"🎓 Você está no {semestre['semestre']}º semestre "
-            f"de {semestre['curso']}."
-        )
-
-    if materias_semestre:
-
-        feedback.append(
-            "📚 Matérias atuais: "
-            + ", ".join(
-                materia["nome"]
-                for materia in materias_semestre
-            )
-        )
-
     return {
         "feedback": feedback,
         "proximo_desafio": proximo_desafio,
         "meta_semanal": meta_semanal,
         "mensagem_final": mensagem_final,
         "motivo_prioridade": motivo_prioridade,
+        "prioridade": prioridade,
+        "icone_prioridade": icone_prioridade,
         "plano_diario": plano_diario,
     }
+
 
 def mostrar_feedback(usuario_id):
 
@@ -348,25 +431,82 @@ def mostrar_feedback(usuario_id):
     print("║               🤖 AI COACH                   ║")
     print("╚══════════════════════════════════════════════╝")
 
-    print("\nSeu mentor analisou seu desempenho:")
+    print("\nSeu mentor analisou seu desempenho:\n")
 
-    for mensagem in dados["feedback"]:
-        print(f"\n{mensagem}")
+    for item in dados["feedback"]:
+        print(item)
+        print()
+
+    # ==========================================================
+    # PRIORIDADE
+    # ==========================================================
+
+    if dados["prioridade"]:
+
+        print(
+            "══════════════ 🎯 PRIORIDADE DE ESTUDO "
+            "══════════════"
+        )
+
+        print(
+            f"\n{dados['icone_prioridade']} "
+            f"PRIORIDADE {dados['prioridade']}"
+        )
+
+        print(
+            f"📘 {dados['motivo_prioridade']}"
+        )
+
+        materia_prioritaria = escolher_materia_prioritaria(
+            listar_materias_semestre(usuario_id)
+        )
+
+        if materia_prioritaria:
+
+            materia = materia_prioritaria["materia"]
+
+            print(
+                f"📚 Matéria: {materia['nome']}"
+            )
+
+            print(
+                f"📊 Progresso: {materia['progresso']}%"
+            )
+
+    # ==========================================================
+    # PRÓXIMO DESAFIO
+    # ==========================================================
 
     print("\n🚀 Próximo desafio:")
     print(dados["proximo_desafio"])
+
+    # ==========================================================
+    # MOTIVO
+    # ==========================================================
 
     if dados["motivo_prioridade"]:
 
         print("\n💡 Por que essa matéria?")
         print(dados["motivo_prioridade"])
 
+    # ==========================================================
+    # PLANO DIÁRIO
+    # ==========================================================
+
     if dados["plano_diario"]:
 
         print("\n⏱️ Plano de estudo de hoje:")
         print(dados["plano_diario"])
 
+    # ==========================================================
+    # META SEMANAL
+    # ==========================================================
+
     print("\n📅 Meta da semana:")
     print(dados["meta_semanal"])
+
+    # ==========================================================
+    # MENSAGEM FINAL
+    # ==========================================================
 
     print("\n" + dados["mensagem_final"])
