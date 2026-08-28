@@ -127,7 +127,8 @@ def gerar_plano_diario(
     materias_semestre
 ):
     """
-    Cria o plano de estudo diário.
+    Cria o plano de estudo diário com base
+    no tempo disponível e nas matérias pendentes.
     """
 
     if not plano or not materia_prioritaria:
@@ -140,7 +141,6 @@ def gerar_plano_diario(
     segunda_materia = None
 
     for materia in materias_semestre:
-
         if (
             materia["nome"] != nome_prioritaria
             and materia["concluida"] == 0
@@ -148,30 +148,40 @@ def gerar_plano_diario(
             segunda_materia = materia["nome"]
             break
 
+    # 2 horas ou mais
     if horas >= 2:
 
         if segunda_materia:
-
             return (
-                f"📘 {nome_prioritaria}: 40 minutos\n"
-                f"📚 {segunda_materia}: 20 minutos\n"
-                "📝 Quiz: 20 minutos"
+                f"📘 {nome_prioritaria}: 60 minutos\n"
+                f"📚 {segunda_materia}: 30 minutos\n"
+                "📝 Revisão e exercícios: 30 minutos"
             )
 
         return (
             f"📘 {nome_prioritaria}: 60 minutos\n"
-            "📝 Quiz: 20 minutos"
+            "📝 Revisão e exercícios: 30 minutos\n"
+            "📚 Quiz: 30 minutos"
         )
 
+    # Entre 1 e 2 horas
     if horas >= 1:
+
+        if segunda_materia:
+            return (
+                f"📘 {nome_prioritaria}: 40 minutos\n"
+                f"📚 {segunda_materia}: 20 minutos"
+            )
 
         return (
             f"📘 {nome_prioritaria}: 40 minutos\n"
-            "📝 Quiz: 20 minutos"
+            "📝 Revisão e exercícios: 20 minutos"
         )
 
+    # Menos de 1 hora
     return (
-        f"📘 {nome_prioritaria}: 20 minutos"
+        f"📘 {nome_prioritaria}: 30 minutos\n"
+        "📝 Revisão rápida e exercícios: 15 minutos"
     )
 
 
