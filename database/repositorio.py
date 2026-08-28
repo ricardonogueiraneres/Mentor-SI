@@ -723,8 +723,15 @@ def listar_materias_semestre(usuario_id):
         INNER JOIN semestre s
             ON s.id = m.semestre_id
         WHERE s.usuario_id = ?
+          AND s.id = (
+              SELECT id
+              FROM semestre
+              WHERE usuario_id = ?
+              ORDER BY id DESC
+              LIMIT 1
+          )
         ORDER BY m.ordem
-    """, (usuario_id,))
+    """, (usuario_id, usuario_id))
 
     materias = cursor.fetchall()
 

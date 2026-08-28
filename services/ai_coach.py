@@ -9,6 +9,8 @@ from database.repositorio import (
     buscar_ultimo_plano,
 )
 
+from services.prioridade_service import calcular_prioridade
+
 
 def classificar_prioridade(progresso: int) -> tuple[str, str]:
     """
@@ -195,10 +197,42 @@ def gerar_feedback(usuario_id):
     semestre = buscar_semestre(usuario_id)
     materias_semestre = listar_materias_semestre(usuario_id)
     plano = buscar_ultimo_plano(usuario_id)
-
-    materia_prioritaria = escolher_materia_prioritaria(
-        materias_semestre
+    ranking = calcular_prioridade(
+        materias_semestre,
+        usuario_id,
+        objetivo
     )
+
+    materia_prioritaria = None
+
+    if ranking:
+        primeiro = ranking[0]
+
+        prioridade, icone = classificar_prioridade(
+            primeiro["progresso"]
+        )
+
+        materia = next(
+            (
+                materia
+                for materia in materias_semestre
+                if materia["nome"] == primeiro["nome"]
+            ),
+            None
+        )
+
+        if materia:
+            materia_prioritaria = {
+                "materia": materia,
+                "motivo": (
+                    f"Esta matéria recebeu a maior prioridade "
+                    f"no ranking ({primeiro['score']} pontos), "
+                    f"considerando progresso, desempenho nos quizzes "
+                    f"e objetivo profissional."
+                ),
+                "prioridade": prioridade,
+                "icone": icone,
+            }
 
     motivo_prioridade = None
     prioridade = None
