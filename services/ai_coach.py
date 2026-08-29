@@ -464,6 +464,7 @@ def gerar_feedback(usuario_id):
         "prioridade": prioridade,
         "icone_prioridade": icone_prioridade,
         "plano_diario": plano_diario,
+        "ranking": ranking,
     }
 
 
@@ -515,6 +516,37 @@ def mostrar_feedback(usuario_id):
 
             print(
                 f"📊 Progresso: {materia['progresso']}%"
+            )
+
+    # ==========================================================
+    # RANKING DE PRIORIDADE
+    # ==========================================================
+
+    if dados["ranking"]:
+
+        print("\n" + "═" * 54)
+        print("             🎯 RANKING DE PRIORIDADE")
+        print("═" * 54)
+
+        icones_ranking = ["🥇", "🥈", "🥉"]
+
+        for posicao, item in enumerate(dados["ranking"], start=1):
+
+            if posicao <= 3:
+                icone = icones_ranking[posicao - 1]
+            else:
+                icone = f"{posicao}º"
+
+            prioridade, icone_prioridade = classificar_prioridade(
+                item["progresso"]
+            )
+
+            print(f"\n{icone} {item['nome']}")
+            print(f"   ⭐ Score: {item['score']} pontos")
+            print(f"   📊 Progresso: {item['progresso']}%")
+            print(f"   🧠 Quiz: {item['quiz']}%")
+            print(
+                f"   {icone_prioridade} Prioridade: {prioridade}"
             )
 
     # ==========================================================
