@@ -350,6 +350,31 @@ def buscar_desempenho_por_materia(usuario_id):
 
     return resultado
 
+def buscar_ultimo_quiz_por_materia(usuario_id):
+
+    conexao, cursor = abrir_cursor()
+
+    cursor.execute("""
+        SELECT
+            materia,
+            data
+        FROM quizzes q1
+        WHERE usuario_id = ?
+          AND id = (
+              SELECT MAX(id)
+              FROM quizzes q2
+              WHERE q2.usuario_id = q1.usuario_id
+                AND q2.materia = q1.materia
+          )
+        ORDER BY materia
+    """, (usuario_id,))
+
+    resultado = cursor.fetchall()
+
+    fechar_conexao(conexao)
+
+    return resultado
+
 def buscar_historico_quizzes(usuario_id):
 
     conexao, cursor = abrir_cursor()
