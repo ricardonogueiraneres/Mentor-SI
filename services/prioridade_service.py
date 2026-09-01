@@ -155,10 +155,20 @@ def calcular_prioridade(materias, usuario_id, objetivo):
             "prioridade": prioridade,
             "icone": icone,
             "motivo": motivo,
+            "relacionada_objetivo": (
+                objetivo in OBJETIVOS
+                and nome in OBJETIVOS[objetivo]
+            ),
         })
 
     ranking.sort(
-        key=lambda x: (-x["score"], x["progresso"], x["nome"])
+        key=lambda x: (
+            -x["score"],
+            -int(x["relacionada_objetivo"]),
+            x["progresso"],
+            x["quiz"],
+            x["nome"],
+        )
     )
 
     return ranking
