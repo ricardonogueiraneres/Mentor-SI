@@ -1,31 +1,23 @@
-from database.repositorio import buscar_desempenho_por_materia
+from database.repositorio import (
+    listar_materias_semestre,
+    buscar_desempenho_por_materia,
+)
 
 
 def obter_progresso_materias(usuario_id: int) -> dict:
     """
-    Calcula o progresso de cada matéria com base nos quizzes realizados.
+    Retorna o progresso real das matérias
+    cadastradas no semestre atual do aluno.
     """
 
-    materias = {
-        "Python": 0,
-        "Algoritmos": 0,
-        "Banco de Dados": 0,
-        "Redes": 0,
-        "Inteligência Artificial": 0,
-    }
+    materias_semestre = listar_materias_semestre(usuario_id)
 
-    desempenho = buscar_desempenho_por_materia(usuario_id)
+    progresso = {}
 
-    for materia, quizzes, acertos, perguntas, media in desempenho:
+    for materia in materias_semestre:
+        progresso[materia["nome"]] = materia["progresso"]
 
-        if perguntas and perguntas > 0:
-            percentual = int((acertos / perguntas) * 100)
-        else:
-            percentual = 0
-
-        materias[materia] = percentual
-
-    return materias
+    return progresso
 
 from database.repositorio import (
     listar_materias_semestre,
@@ -104,7 +96,6 @@ def gerenciar_progresso_materias(usuario_id: int):
                 materia_id,
                 progresso
             )
-
             print("\n✅ Progresso atualizado com sucesso!")
 
             if progresso == 100 and materia_selecionada["progresso"] < 100:

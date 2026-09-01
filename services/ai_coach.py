@@ -206,11 +206,8 @@ def gerar_feedback(usuario_id):
     materia_prioritaria = None
 
     if ranking:
-        primeiro = ranking[0]
 
-        prioridade, icone = classificar_prioridade(
-            primeiro["progresso"]
-        )
+        primeiro = ranking[0]
 
         materia = next(
             (
@@ -222,16 +219,14 @@ def gerar_feedback(usuario_id):
         )
 
         if materia:
+
             materia_prioritaria = {
                 "materia": materia,
-                "motivo": (
-                    f"Esta matéria recebeu a maior prioridade "
-                    f"no ranking ({primeiro['score']} pontos), "
-                    f"considerando progresso, desempenho nos quizzes "
-                    f"e objetivo profissional."
-                ),
-                "prioridade": prioridade,
-                "icone": icone,
+                "motivo": primeiro["motivo"],
+                "prioridade": primeiro["prioridade"],
+                "icone": primeiro["icone"],
+                "score": primeiro["score"],
+                "quiz": primeiro["quiz"],
             }
 
     motivo_prioridade = None
