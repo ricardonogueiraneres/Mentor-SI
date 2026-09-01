@@ -1,5 +1,9 @@
-from database.repositorio import buscar_desempenho_por_materia
+from datetime import datetime
 
+from database.repositorio import (
+    buscar_desempenho_por_materia,
+    buscar_ultimo_quiz_por_materia,
+)
 
 PESOS = {
     "progresso": 50,
@@ -65,6 +69,13 @@ def calcular_prioridade(materias, usuario_id, objetivo):
                 (acertos / perguntas) * 100
             )
 
+    ultimos_quizzes = buscar_ultimo_quiz_por_materia(usuario_id)
+
+    datas_quiz = {
+        item["materia"]: item["data"]
+        for item in ultimos_quizzes
+    }
+
     ranking = []
 
     for materia in materias:
@@ -83,6 +94,23 @@ def calcular_prioridade(materias, usuario_id, objetivo):
         )
 
         quiz = medias.get(nome, 0)
+
+        data_ultimo_quiz = datas_quiz.get(nome)
+        dias_sem_quiz = None
+
+        if data_ultimo_quiz:
+            try:
+                data_quiz = datetime.strptime(
+                    data_ultimo_quiz,
+                    "%d/%m/%Y %H:%M:%S"
+                )
+
+                dias_sem_quiz = (
+                    datetime.now() - data_quiz
+                ).days
+
+            except ValueError:
+                dias_sem_quiz = None
 
         score_quiz = (
             (100 - quiz)
@@ -151,6 +179,8 @@ def calcular_prioridade(materias, usuario_id, objetivo):
             "nome": nome,
             "progresso": progresso,
             "quiz": quiz,
+            "ultimo_quiz": data_ultimo_quiz,
+            "dias_sem_quiz": dias_sem_quiz,
             "score": round(score, 1),
             "prioridade": prioridade,
             "icone": icone,
